@@ -6,7 +6,11 @@ const authMiddleware = require('../middleware/auth');
 // Get feedback for a startup
 router.get('/', authMiddleware, async (req, res) => {
   try {
-    const { startupId } = req.query;
+    const { startupId } = req.user;
+    
+    if (!startupId) {
+      return res.status(400).json({ error: 'No startup associated with user' });
+    }
     
     const feedbackSnapshot = await db.collection('feedbackResponses')
       .where('startupId', '==', startupId)
@@ -29,7 +33,12 @@ router.get('/', authMiddleware, async (req, res) => {
 // Create feedback form
 router.post('/forms', authMiddleware, async (req, res) => {
   try {
-    const { title, questions, targetAudience, startupId } = req.body;
+    const { startupId, uid } = req.user;
+    const { title, questions, targetAudience } = req.body;
+    
+    if (!startupId) {
+      return res.status(400).json({ error: 'No startup associated with user' });
+    }
     
     const formData = {
       title,
@@ -37,7 +46,7 @@ router.post('/forms', authMiddleware, async (req, res) => {
       targetAudience,
       startupId,
       shareableLink: `${process.env.FRONTEND_URL}/feedback/form/${Date.now()}`,
-      createdBy: req.user.uid,
+      createdBy: uid,
       createdAt: new Date().toISOString(),
     };
 

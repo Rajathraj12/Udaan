@@ -21,7 +21,7 @@ export default function Dashboard() {
     return (
       <Layout>
         <div className="flex items-center justify-center h-64">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+          <div className="w-12 h-12 border-b-2 border-blue-500 rounded-full animate-spin"></div>
         </div>
       </Layout>
     );
@@ -63,9 +63,9 @@ function FounderDashboard({ userProfile, currentUser }) {
   ];
 
   const tasksByStatus = [
-    { name: 'To-Do', value: 5, color: '#6b7280' },
-    { name: 'In Progress', value: 4, color: '#3b82f6' },
-    { name: 'Completed', value: 15, color: '#10b981' },
+    { name: 'To-Do', value: 8, color: '#a855f7' },
+    { name: 'In Progress', value: 5, color: '#22d3ee' },
+    { name: 'Completed', value: 12, color: '#34d399' },
   ];
 
   const tasksByPriority = [
@@ -115,13 +115,13 @@ function FounderDashboard({ userProfile, currentUser }) {
         {/* Stats Grid */}
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {/* Total Tasks */}
-          <div className="glass-card overflow-hidden shadow-sm">
+          <div className="overflow-hidden shadow-sm glass-card">
             <div className="p-5">
               <div className="flex items-center">
                 <div className="flex-shrink-0">
-                  <CheckCircleIcon className="h-6 w-6" style={{ color: 'var(--neon-blue)' }} />
+                  <CheckCircleIcon className="w-6 h-6" style={{ color: 'var(--neon-blue)' }} />
                 </div>
-                <div className="ml-5 w-0 flex-1">
+                <div className="flex-1 w-0 ml-5">
                   <dl>
                     <dt className="text-sm font-medium text-gray-400 truncate">Total Tasks</dt>
                     <dd className="text-2xl font-bold text-white">{stats.totalTasks}</dd>
@@ -129,7 +129,7 @@ function FounderDashboard({ userProfile, currentUser }) {
                 </div>
               </div>
             </div>
-            <div className="bg-white/5 border-t border-white/10 px-5 py-3">
+            <div className="px-5 py-3 border-t bg-white/5 border-white/10">
               <div className="text-sm" style={{ color: 'var(--neon-blue)' }}>
                 {stats.completedTasks} completed
               </div>
@@ -137,13 +137,13 @@ function FounderDashboard({ userProfile, currentUser }) {
           </div>
 
           {/* Pending Tasks */}
-          <div className="glass-card overflow-hidden shadow-sm">
+          <div className="overflow-hidden shadow-sm glass-card">
             <div className="p-5">
               <div className="flex items-center">
                 <div className="flex-shrink-0">
-                  <ClockIcon className="h-6 w-6 text-orange-400" />
+                  <ClockIcon className="w-6 h-6 text-orange-400" />
                 </div>
-                <div className="ml-5 w-0 flex-1">
+                <div className="flex-1 w-0 ml-5">
                   <dl>
                     <dt className="text-sm font-medium text-gray-400 truncate">Pending Tasks</dt>
                     <dd className="text-2xl font-bold text-white">{stats.pendingTasks}</dd>
@@ -151,7 +151,7 @@ function FounderDashboard({ userProfile, currentUser }) {
                 </div>
               </div>
             </div>
-            <div className="bg-white/5 border-t border-white/10 px-5 py-3">
+            <div className="px-5 py-3 border-t bg-white/5 border-white/10">
               <div className="text-sm text-orange-400">
                 {Math.round((stats.completedTasks / stats.totalTasks) * 100)}% completion rate
               </div>
@@ -159,13 +159,13 @@ function FounderDashboard({ userProfile, currentUser }) {
           </div>
 
           {/* Milestones */}
-          <div className="glass-card overflow-hidden shadow-sm">
+          <div className="overflow-hidden shadow-sm glass-card">
             <div className="p-5">
               <div className="flex items-center">
                 <div className="flex-shrink-0">
-                  <FlagIcon className="h-6 w-6" style={{ color: 'var(--neon-purple)' }} />
+                  <FlagIcon className="w-6 h-6" style={{ color: 'var(--neon-purple)' }} />
                 </div>
-                <div className="ml-5 w-0 flex-1">
+                <div className="flex-1 w-0 ml-5">
                   <dl>
                     <dt className="text-sm font-medium text-gray-400 truncate">Milestones</dt>
                     <dd className="text-2xl font-bold text-white">{stats.totalMilestones}</dd>
@@ -173,7 +173,7 @@ function FounderDashboard({ userProfile, currentUser }) {
                 </div>
               </div>
             </div>
-            <div className="bg-white/5 border-t border-white/10 px-5 py-3">
+            <div className="px-5 py-3 border-t bg-white/5 border-white/10">
               <div className="text-sm" style={{ color: 'var(--neon-purple)' }}>
                 {stats.completedMilestones} achieved
               </div>
@@ -181,13 +181,13 @@ function FounderDashboard({ userProfile, currentUser }) {
           </div>
 
           {/* Progress Score */}
-          <div className="glass-card overflow-hidden shadow-sm" style={{ background: 'linear-gradient(135deg, rgba(34, 211, 238, 0.2), rgba(168, 85, 247, 0.2))' }}>
+          <div className="overflow-hidden shadow-sm glass-card" style={{ background: 'linear-gradient(135deg, rgba(34, 211, 238, 0.2), rgba(168, 85, 247, 0.2))' }}>
             <div className="p-5">
               <div className="flex items-center">
                 <div className="flex-shrink-0">
-                  <ChartBarIcon className="h-6 w-6 text-white" />
+                  <ChartBarIcon className="w-6 h-6 text-white" />
                 </div>
-                <div className="ml-5 w-0 flex-1">
+                <div className="flex-1 w-0 ml-5">
                   <dl>
                     <dt className="text-sm font-medium text-gray-300 truncate">Progress Score</dt>
                     <dd className="text-2xl font-bold text-white">{stats.progressScore}%</dd>
@@ -195,9 +195,9 @@ function FounderDashboard({ userProfile, currentUser }) {
                 </div>
               </div>
             </div>
-            <div className="bg-white/20 px-5 py-3">
-              <div className="text-sm text-white flex items-center">
-                <ArrowTrendingUpIcon className="h-4 w-4 mr-1" />
+            <div className="px-5 py-3 bg-white/20">
+              <div className="flex items-center text-sm text-white">
+                <ArrowTrendingUpIcon className="w-4 h-4 mr-1" />
                 On track for growth
               </div>
             </div>
@@ -205,25 +205,34 @@ function FounderDashboard({ userProfile, currentUser }) {
         </div>
 
         {/* Charts Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
           {/* Task Completion Trend */}
-          <div className="glass-card p-6">
-            <h3 className="text-lg font-semibold text-white mb-4">Task Completion Trend</h3>
+          <div className="p-6 glass-card">
+            <h3 className="mb-4 text-lg font-semibold text-white">Task Completion Trend</h3>
             <ResponsiveContainer width="100%" height={250}>
               <LineChart data={taskCompletionData}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
                 <XAxis dataKey="name" stroke="#9CA3AF" />
                 <YAxis stroke="#9CA3AF" />
-                <Tooltip contentStyle={{ backgroundColor: 'rgba(0, 0, 0, 0.8)', border: '1px solid rgba(255, 255, 255, 0.1)', color: '#fff' }} />
+                <Tooltip 
+                  contentStyle={{ 
+                    backgroundColor: 'rgba(0, 0, 0, 0.9)', 
+                    border: '1px solid rgba(34, 211, 238, 0.5)', 
+                    borderRadius: '8px',
+                    backdropFilter: 'blur(10px)',
+                    color: '#fff' 
+                  }} 
+                  labelStyle={{ color: '#22d3ee' }}
+                />
                 <Legend wrapperStyle={{ color: '#9CA3AF' }} />
-                <Line type="monotone" dataKey="completed" stroke="var(--neon-blue)" strokeWidth={2} />
+                <Line type="monotone" dataKey="completed" stroke="var(--neon-blue)" strokeWidth={2} dot={{ fill: '#22d3ee', r: 4 }} activeDot={{ r: 6 }} />
               </LineChart>
             </ResponsiveContainer>
           </div>
 
           {/* Tasks by Status */}
-          <div className="glass-card p-6">
-            <h3 className="text-lg font-semibold text-white mb-4">Tasks by Status</h3>
+          <div className="p-6 glass-card">
+            <h3 className="mb-4 text-lg font-semibold text-white">Tasks by Status</h3>
             <ResponsiveContainer width="100%" height={250}>
               <PieChart>
                 <Pie
@@ -235,36 +244,61 @@ function FounderDashboard({ userProfile, currentUser }) {
                   outerRadius={80}
                   fill="#8884d8"
                   dataKey="value"
+                  stroke="rgba(255, 255, 255, 0.2)"
+                  strokeWidth={2}
                 >
                   {tasksByStatus.map((entry, index) => (
                     <Cell key={`cell-${index}`} fill={entry.color} />
                   ))}
                 </Pie>
-                <Tooltip contentStyle={{ backgroundColor: 'rgba(0, 0, 0, 0.8)', border: '1px solid rgba(255, 255, 255, 0.1)', color: '#fff' }} />
+                <Tooltip 
+                  contentStyle={{ 
+                    backgroundColor: 'rgba(0, 0, 0, 0.9)', 
+                    border: '1px solid rgba(34, 211, 238, 0.5)', 
+                    borderRadius: '8px',
+                    backdropFilter: 'blur(10px)',
+                    color: '#fff' 
+                  }} 
+                  labelStyle={{ color: '#22d3ee' }}
+                />
+                <Legend 
+                  wrapperStyle={{ color: '#9CA3AF' }}
+                  iconType="circle"
+                />
               </PieChart>
             </ResponsiveContainer>
           </div>
         </div>
 
         {/* Tasks by Priority */}
-        <div className="glass-card p-6">
-          <h3 className="text-lg font-semibold text-white mb-4">Tasks by Priority</h3>
+        <div className="p-6 glass-card">
+          <h3 className="mb-4 text-lg font-semibold text-white">Tasks by Priority</h3>
           <ResponsiveContainer width="100%" height={250}>
             <BarChart data={tasksByPriority}>
               <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
               <XAxis dataKey="name" stroke="#9CA3AF" />
               <YAxis stroke="#9CA3AF" />
-              <Tooltip contentStyle={{ backgroundColor: 'rgba(0, 0, 0, 0.8)', border: '1px solid rgba(255, 255, 255, 0.1)', color: '#fff' }} />
+              <Tooltip 
+                contentStyle={{ 
+                  backgroundColor: 'rgba(0, 0, 0, 0.9)', 
+                  border: '1px solid rgba(34, 211, 238, 0.5)', 
+                  borderRadius: '8px',
+                  backdropFilter: 'blur(10px)',
+                  color: '#fff' 
+                }} 
+                labelStyle={{ color: '#22d3ee' }}
+                cursor={{ fill: 'rgba(34, 211, 238, 0.1)' }}
+              />
               <Legend wrapperStyle={{ color: '#9CA3AF' }} />
-              <Bar dataKey="value" fill="var(--neon-blue)" />
+              <Bar dataKey="value" fill="var(--neon-blue)" radius={[8, 8, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>
 
         {/* What Should I Do Next? - AI Insights */}
-        <div className="glass-card p-6" style={{ background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02))' }}>
+        <div className="p-6 glass-card" style={{ background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02))' }}>
           <div className="flex items-center mb-4">
-            <LightBulbIcon className="h-7 w-7" style={{ color: 'var(--neon-green)' }} className="mr-2" />
+            <LightBulbIcon className="h-7 w-7 mr-2" style={{ color: 'var(--neon-green)' }} />
             <h3 className="text-xl font-bold text-white">What Should I Do Next?</h3>
           </div>
           
@@ -302,8 +336,8 @@ function FounderDashboard({ userProfile, currentUser }) {
                             {suggestion.priority.toUpperCase()}
                           </span>
                         </div>
-                        <p className="text-sm text-gray-300 mb-2">{suggestion.description}</p>
-                        <p className="text-xs text-gray-400 italic">{suggestion.category}</p>
+                        <p className="mb-2 text-sm text-gray-300">{suggestion.description}</p>
+                        <p className="text-xs italic text-gray-400">{suggestion.category}</p>
                       </div>
                     </div>
                   </div>

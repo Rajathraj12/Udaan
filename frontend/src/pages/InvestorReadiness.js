@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useAuth } from '../contexts/AuthContext';
+import Layout from '../components/Layout';
 import toast from 'react-hot-toast';
 
 const InvestorReadiness = () => {
@@ -61,17 +62,21 @@ const InvestorReadiness = () => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
-      </div>
+      <Layout>
+        <div className="flex items-center justify-center h-64">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2" style={{ borderColor: 'var(--neon-blue)' }}></div>
+        </div>
+      </Layout>
     );
   }
 
   if (!readinessData) {
     return (
-      <div className="text-center py-12">
-        <p className="text-gray-500">Unable to load investor readiness. Please try again.</p>
-      </div>
+      <Layout>
+        <div className="text-center py-12">
+          <p className="text-gray-400">Unable to load investor readiness. Please try again.</p>
+        </div>
+      </Layout>
     );
   }
 
@@ -81,29 +86,33 @@ const InvestorReadiness = () => {
   const currentStageIndex = stageOrder.indexOf(currentStage);
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900">Investor Readiness Timeline</h1>
-          <p className="mt-2 text-gray-600">
-            Track your journey from idea to investor-ready startup
-          </p>
+    <Layout>
+      <div className="space-y-4">
+        {/* Header */}
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-2xl font-bold text-white">Investor Readiness Timeline</h1>
+            <p className="mt-1 text-sm text-gray-300">
+              Track your journey from idea to investor-ready startup
+            </p>
+          </div>
+          <div className="text-right">
+            <p className="text-xs text-gray-400">Overall Readiness</p>
+            <p className="text-3xl font-bold" style={{ color: 'var(--neon-blue)' }}>{readinessScore}%</p>
+          </div>
         </div>
-        <div className="text-right">
-          <p className="text-sm text-gray-500">Overall Readiness</p>
-          <p className="text-4xl font-bold text-primary-600">{readinessScore}%</p>
-        </div>
-      </div>
 
       {/* Visual Timeline */}
-      <div className="bg-white rounded-lg shadow-md p-8">
+      <div className="glass-card p-5">
         <div className="relative">
           {/* Progress Bar */}
-          <div className="absolute top-8 left-0 right-0 h-2 bg-gray-200 rounded-full">
+          <div className="absolute top-8 left-0 right-0 h-2 bg-white/10 rounded-full">
             <div
-              className="h-2 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-full transition-all duration-500"
-              style={{ width: `${(currentStageIndex / 3) * 100}%` }}
+              className="h-2 rounded-full transition-all duration-500"
+              style={{ 
+                background: 'linear-gradient(to right, var(--neon-blue), var(--neon-purple))',
+                width: `${(currentStageIndex / 3) * 100}%`
+              }}
             ></div>
           </div>
 
@@ -119,32 +128,34 @@ const InvestorReadiness = () => {
                 <div key={stage} className="flex flex-col items-center" style={{ width: '25%' }}>
                   {/* Node Circle */}
                   <div
-                    className={`w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold z-10 transition-all ${
+                    className={`w-12 h-12 rounded-full flex items-center justify-center text-lg font-bold z-10 transition-all ${
                       isPast
                         ? 'bg-green-500 text-white'
                         : isActive
-                        ? 'bg-primary-600 text-white ring-4 ring-primary-200'
-                        : 'bg-gray-200 text-gray-400'
+                        ? 'text-white ring-4'
+                        : 'bg-white/10 text-gray-400'
                     }`}
+                    style={isActive ? { backgroundColor: 'var(--neon-blue)', borderColor: 'rgba(34, 211, 238, 0.3)' } : {}}
                   >
                     {isPast ? '✓' : index + 1}
                   </div>
 
                   {/* Stage Name */}
                   <p
-                    className={`mt-3 text-sm font-semibold ${
-                      isActive ? 'text-primary-600' : 'text-gray-600'
+                    className={`mt-2 text-sm font-semibold ${
+                      isActive ? 'text-white' : 'text-gray-400'
                     }`}
+                    style={isActive ? { color: 'var(--neon-blue)' } : {}}
                   >
                     {stageData.name}
                   </p>
 
                   {/* Progress Badge */}
                   <span
-                    className={`mt-1 px-2 py-1 rounded-full text-xs font-medium ${
+                    className={`mt-1 px-2 py-0.5 rounded-full text-xs font-medium ${
                       stageData.unlocked
-                        ? 'bg-green-100 text-green-800'
-                        : 'bg-gray-100 text-gray-600'
+                        ? 'bg-green-500/20 text-green-400 border border-green-500/30'
+                        : 'bg-white/5 text-gray-400 border border-white/10'
                     }`}
                   >
                     {stageData.progress}% Complete
@@ -157,10 +168,11 @@ const InvestorReadiness = () => {
 
         {/* Advance Button */}
         {canAdvance && (
-          <div className="mt-8 text-center">
+          <div className="mt-6 text-center">
             <button
               onClick={advanceStage}
-              className="px-6 py-3 bg-gradient-to-r from-primary-600 to-secondary-600 text-white rounded-lg hover:from-primary-700 hover:to-secondary-700 transition font-semibold"
+              className="px-5 py-2.5 text-white rounded-lg transition font-semibold"
+              style={{ background: 'linear-gradient(to right, var(--neon-blue), var(--neon-purple))' }}
             >
               🚀 Advance to {stageProgress[nextStage].name}
             </button>
@@ -169,19 +181,19 @@ const InvestorReadiness = () => {
       </div>
 
       {/* Current Stage Details */}
-      <div className="bg-white rounded-lg shadow-md p-6">
-        <h2 className="text-xl font-semibold text-gray-900 mb-4">
+      <div className="glass-card p-5">
+        <h2 className="text-lg font-semibold text-white mb-3">
           📋 {stageProgress[currentStage].name} Checklist
         </h2>
         
-        <div className="space-y-3">
+        <div className="space-y-2.5">
           {stageProgress[currentStage].criteria.map((criterion, index) => (
             <div
               key={index}
-              className={`flex items-start gap-3 p-4 rounded-lg border ${
+              className={`flex items-start gap-3 p-3 rounded-lg border ${
                 criterion.completed
-                  ? 'bg-green-50 border-green-200'
-                  : 'bg-gray-50 border-gray-200'
+                  ? 'bg-green-500/10 border-green-500/30'
+                  : 'bg-white/5 border-white/10'
               }`}
             >
               {criterion.type === 'manual' ? (
@@ -189,14 +201,15 @@ const InvestorReadiness = () => {
                   type="checkbox"
                   checked={criterion.completed}
                   onChange={() => toggleManualCheck(criterion.id, criterion.completed)}
-                  className="mt-1 h-5 w-5 text-primary-600 rounded cursor-pointer"
+                  className="mt-1 h-4 w-4 rounded cursor-pointer"
+                  style={{ accentColor: 'var(--neon-blue)' }}
                 />
               ) : (
                 <div
-                  className={`flex-shrink-0 w-5 h-5 rounded flex items-center justify-center mt-1 ${
+                  className={`flex-shrink-0 w-4 h-4 rounded flex items-center justify-center mt-1 text-xs ${
                     criterion.completed
                       ? 'bg-green-500 text-white'
-                      : 'bg-gray-300 text-gray-500'
+                      : 'bg-white/10 text-gray-500'
                   }`}
                 >
                   {criterion.completed && '✓'}
@@ -205,14 +218,14 @@ const InvestorReadiness = () => {
 
               <div className="flex-1">
                 <p
-                  className={`font-medium ${
-                    criterion.completed ? 'text-green-800 line-through' : 'text-gray-900'
+                  className={`text-sm font-medium ${
+                    criterion.completed ? 'text-green-400 line-through' : 'text-white'
                   }`}
                 >
                   {criterion.label}
                 </p>
                 {criterion.type !== 'manual' && (
-                  <p className="text-sm text-gray-500 mt-1">
+                  <p className="text-xs text-gray-400 mt-0.5">
                     Auto-tracked from your {criterion.type} data
                   </p>
                 )}
@@ -224,15 +237,16 @@ const InvestorReadiness = () => {
 
       {/* Next Actions */}
       {nextActions && nextActions.length > 0 && (
-        <div className="bg-gradient-to-r from-primary-50 to-secondary-50 rounded-lg shadow-md p-6">
-          <h2 className="text-xl font-semibold text-gray-900 mb-4">🎯 Recommended Next Actions</h2>
+        <div className="glass-card p-5 bg-gradient-to-r from-blue-500/10 to-purple-500/10">
+          <h2 className="text-lg font-semibold text-white mb-3">🎯 Recommended Next Actions</h2>
           <ul className="space-y-2">
             {nextActions.map((action, index) => (
-              <li key={index} className="flex items-start gap-3">
-                <span className="flex-shrink-0 w-6 h-6 bg-primary-600 text-white rounded-full flex items-center justify-center text-sm font-semibold">
+              <li key={index} className="flex items-start gap-2.5">
+                <span className="flex-shrink-0 w-5 h-5 text-white rounded-full flex items-center justify-center text-xs font-semibold"
+                  style={{ background: 'var(--neon-blue)' }}>
                   {index + 1}
                 </span>
-                <span className="text-gray-700">{action}</span>
+                <span className="text-sm text-gray-300">{action}</span>
               </li>
             ))}
           </ul>
@@ -240,41 +254,41 @@ const InvestorReadiness = () => {
       )}
 
       {/* All Stages Overview */}
-      <div className="bg-white rounded-lg shadow-md p-6">
-        <h2 className="text-xl font-semibold text-gray-900 mb-4">📊 All Stages Overview</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="glass-card p-5">
+        <h2 className="text-lg font-semibold text-white mb-3">📊 All Stages Overview</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           {stageOrder.map((stage) => {
             const stageData = stageProgress[stage];
             return (
               <div
                 key={stage}
-                className={`p-4 rounded-lg border-2 ${
+                className={`p-3 rounded-lg border-2 ${
                   stage === currentStage
-                    ? 'border-primary-600 bg-primary-50'
+                    ? 'bg-blue-500/10 border-blue-500/50'
                     : stageData.unlocked
-                    ? 'border-green-500 bg-green-50'
-                    : 'border-gray-200 bg-gray-50'
+                    ? 'bg-green-500/10 border-green-500/30'
+                    : 'bg-white/5 border-white/10'
                 }`}
               >
                 <div className="flex items-center justify-between mb-2">
-                  <h3 className="font-semibold text-gray-900">{stageData.name}</h3>
+                  <h3 className="text-sm font-semibold text-white">{stageData.name}</h3>
                   <span
-                    className={`px-2 py-1 rounded text-xs font-medium ${
+                    className={`px-2 py-0.5 rounded text-xs font-medium ${
                       stageData.unlocked
                         ? 'bg-green-500 text-white'
-                        : 'bg-gray-300 text-gray-700'
+                        : 'bg-white/10 text-gray-400'
                     }`}
                   >
                     {stageData.unlocked ? 'UNLOCKED' : `${stageData.progress}%`}
                   </span>
                 </div>
-                <div className="w-full bg-gray-200 rounded-full h-2">
+                <div className="w-full bg-white/10 rounded-full h-1.5">
                   <div
-                    className="bg-primary-600 h-2 rounded-full transition-all"
-                    style={{ width: `${stageData.progress}%` }}
+                    className="h-1.5 rounded-full transition-all"
+                    style={{ width: `${stageData.progress}%`, background: 'var(--neon-blue)' }}
                   ></div>
                 </div>
-                <p className="text-sm text-gray-600 mt-2">
+                <p className="text-xs text-gray-400 mt-2">
                   {stageData.criteria.filter((c) => c.completed).length} of{' '}
                   {stageData.criteria.length} criteria met
                 </p>
@@ -283,7 +297,8 @@ const InvestorReadiness = () => {
           })}
         </div>
       </div>
-    </div>
+      </div>
+    </Layout>
   );
 };
 

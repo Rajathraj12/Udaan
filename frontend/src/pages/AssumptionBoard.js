@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useAuth } from '../contexts/AuthContext';
+import Layout from '../components/Layout';
 import toast from 'react-hot-toast';
 
 const AssumptionBoard = () => {
@@ -114,9 +115,11 @@ const AssumptionBoard = () => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2" style={{ borderColor: 'var(--neon-blue)' }}></div>
-      </div>
+      <Layout>
+        <div className="flex items-center justify-center h-64">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2" style={{ borderColor: 'var(--neon-blue)' }}></div>
+        </div>
+      </Layout>
     );
   }
 
@@ -129,29 +132,30 @@ const AssumptionBoard = () => {
   };
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold text-white">Assumption Board</h1>
-          <p className="mt-2 text-gray-300">
-            Track hypotheses and link customer feedback for validation
-          </p>
+    <Layout>
+      <div className="space-y-4">
+        {/* Header */}
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-2xl font-bold text-white">Assumption Board</h1>
+            <p className="mt-1 text-sm text-gray-300">
+              Track hypotheses and link customer feedback for validation
+            </p>
+          </div>
+          <button
+            onClick={() => setShowForm(!showForm)}
+            className="px-4 py-2 text-white rounded-lg transition text-sm"
+            style={{ backgroundColor: 'var(--neon-blue)' }}
+          >
+            {showForm ? '✕ Cancel' : '+ Add Assumption'}
+          </button>
         </div>
-        <button
-          onClick={() => setShowForm(!showForm)}
-          className="px-4 py-2 text-white rounded-lg transition"
-          style={{ backgroundColor: 'var(--neon-blue)' }}
-        >
-          {showForm ? '✕ Cancel' : '+ Add Assumption'}
-        </button>
-      </div>
 
       {/* Add Assumption Form */}
       {showForm && (
-        <div className="glass-card p-6">
-          <h2 className="text-xl font-semibold text-white mb-4">Add New Assumption</h2>
-          <form onSubmit={handleSubmit} className="space-y-4">
+        <div className="glass-card p-5">
+          <h2 className="text-lg font-semibold text-white mb-3">Add New Assumption</h2>
+          <form onSubmit={handleSubmit} className="space-y-3">
             <div>
               <label className="block text-sm font-medium text-gray-400 mb-1">
                 Hypothesis Statement *
@@ -159,14 +163,14 @@ const AssumptionBoard = () => {
               <textarea
                 value={formData.hypothesis}
                 onChange={(e) => setFormData({ ...formData, hypothesis: e.target.value })}
-                className="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white focus:ring-2 focus:outline-none"
-                rows="3"
+                className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded-lg text-white text-sm focus:ring-2 focus:outline-none"
+                rows="2"
                 placeholder="e.g., Small businesses struggle with manual invoicing and would pay $50/month for automation"
                 required
               />
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
               <div>
                 <label className="block text-sm font-medium text-gray-400 mb-1">
                   Category
@@ -174,7 +178,7 @@ const AssumptionBoard = () => {
                 <select
                   value={formData.category}
                   onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                  className="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white focus:ring-2 focus:outline-none"
+                  className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded-lg text-white text-sm focus:ring-2 focus:outline-none"
                 >
                   <option value="customer">Customer</option>
                   <option value="problem">Problem</option>
@@ -191,7 +195,7 @@ const AssumptionBoard = () => {
                 <select
                   value={formData.priority}
                   onChange={(e) => setFormData({ ...formData, priority: e.target.value })}
-                  className="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white focus:ring-2 focus:outline-none"
+                  className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded-lg text-white text-sm focus:ring-2 focus:outline-none"
                 >
                   <option value="high">High</option>
                   <option value="medium">Medium</option>
@@ -207,7 +211,7 @@ const AssumptionBoard = () => {
                   type="text"
                   value={formData.testMethod}
                   onChange={(e) => setFormData({ ...formData, testMethod: e.target.value })}
-                  className="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white focus:ring-2 focus:outline-none"
+                  className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded-lg text-white text-sm focus:ring-2 focus:outline-none"
                   placeholder="e.g., 10 interviews"
                 />
               </div>
@@ -215,7 +219,7 @@ const AssumptionBoard = () => {
 
             <button
               type="submit"
-              className="w-full px-6 py-3 text-white rounded-lg transition font-semibold"
+              className="w-full px-5 py-2.5 text-white rounded-lg transition text-sm font-semibold"
               style={{ backgroundColor: 'var(--neon-blue)' }}
             >
               Add Assumption
@@ -225,20 +229,20 @@ const AssumptionBoard = () => {
       )}
 
       {/* Board Columns */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
         {['untested', 'testing', 'validated', 'invalidated'].map((status) => (
-          <div key={status} className="glass-card p-4">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="font-semibold text-white capitalize">{status}</h3>
-              <span className="bg-white/10 text-gray-300 px-2 py-1 rounded-full text-xs font-medium">
+          <div key={status} className="glass-card p-3">
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="text-sm font-semibold text-white capitalize">{status}</h3>
+              <span className="bg-white/10 text-gray-300 px-2 py-0.5 rounded-full text-xs font-medium">
                 {grouped[status].length}
               </span>
             </div>
 
-            <div className="space-y-3">
+            <div className="space-y-2.5">
               {grouped[status].map((assumption) => (
-                <div key={assumption.id} className="bg-white/5 rounded-lg p-4">
-                  <div className="flex items-start justify-between mb-2">
+                <div key={assumption.id} className="bg-white/5 rounded-lg p-3">
+                  <div className="flex items-start justify-between mb-1.5">
                     <span className={`px-2 py-1 rounded text-xs font-medium ${getCategoryColor(assumption.category)}`}>
                       {assumption.category}
                     </span>
@@ -247,18 +251,18 @@ const AssumptionBoard = () => {
                     </span>
                   </div>
 
-                  <p className="text-sm text-gray-300 mb-3">{assumption.hypothesis}</p>
+                  <p className="text-sm text-gray-300 mb-2">{assumption.hypothesis}</p>
 
                   {/* Validation Score */}
                   {assumption.evidence && assumption.evidence.length > 0 && (
-                    <div className="mb-3">
+                    <div className="mb-2">
                       <div className="flex items-center justify-between text-xs mb-1">
                         <span className="text-gray-400">Validation</span>
                         <span className="font-medium text-white">{assumption.validationScore}%</span>
                       </div>
-                      <div className="w-full bg-gray-700/50 rounded-full h-2">
+                      <div className="w-full bg-gray-700/50 rounded-full h-1.5">
                         <div
-                          className={`h-2 rounded-full ${
+                          className={`h-1.5 rounded-full ${
                             assumption.validationScore >= 70
                               ? 'bg-green-500'
                               : assumption.validationScore >= 30
@@ -300,28 +304,29 @@ const AssumptionBoard = () => {
       </div>
 
       {/* Stats */}
-      <div className="glass-card p-6">
-        <h2 className="text-xl font-semibold text-white mb-4">Validation Progress</h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="glass-card p-5">
+        <h2 className="text-lg font-semibold text-white mb-3">Validation Progress</h2>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           <div className="text-center">
-            <p className="text-3xl font-bold text-gray-400">{grouped.untested.length}</p>
-            <p className="text-sm text-gray-300">Untested</p>
+            <p className="text-2xl font-bold text-gray-400">{grouped.untested.length}</p>
+            <p className="text-xs text-gray-300">Untested</p>
           </div>
           <div className="text-center">
-            <p className="text-3xl font-bold" style={{ color: 'var(--neon-blue)' }}>{grouped.testing.length}</p>
-            <p className="text-sm text-gray-300">Testing</p>
+            <p className="text-2xl font-bold" style={{ color: 'var(--neon-blue)' }}>{grouped.testing.length}</p>
+            <p className="text-xs text-gray-300">Testing</p>
           </div>
           <div className="text-center">
-            <p className="text-3xl font-bold" style={{ color: 'var(--neon-green)' }}>{grouped.validated.length}</p>
-            <p className="text-sm text-gray-300">Validated</p>
+            <p className="text-2xl font-bold" style={{ color: 'var(--neon-green)' }}>{grouped.validated.length}</p>
+            <p className="text-xs text-gray-300">Validated</p>
           </div>
           <div className="text-center">
-            <p className="text-3xl font-bold text-red-400">{grouped.invalidated.length}</p>
-            <p className="text-sm text-gray-300">Invalidated</p>
+            <p className="text-2xl font-bold text-red-400">{grouped.invalidated.length}</p>
+            <p className="text-xs text-gray-300">Invalidated</p>
           </div>
         </div>
       </div>
-    </div>
+      </div>
+    </Layout>
   );
 };
 

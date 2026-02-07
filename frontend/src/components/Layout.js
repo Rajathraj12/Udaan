@@ -56,7 +56,7 @@ export default function Layout({ children }) {
         <div className="flex flex-col flex-grow overflow-y-auto border-r glass-card border-white/10" style={{borderRadius: 0, backgroundImage: 'linear-gradient(135deg, rgba(37, 99, 235, 0.05) 0%, rgba(168, 85, 247, 0.05) 100%)'}}>
           {/* Logo */}
           <div className="flex items-center justify-center flex-shrink-0 px-4 py-6" style={{background: 'rgba(0, 0, 0, 0.3)'}}>
-            <Logo className="w-auto h-5" />
+            <Logo className="w-auto h-10" />
           </div>
 
           {/* Navigation */}

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useAuth } from '../contexts/AuthContext';
+import Layout from '../components/Layout';
 import toast from 'react-hot-toast';
 
 const DecisionLog = () => {
@@ -110,36 +111,39 @@ const DecisionLog = () => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2" style={{ borderColor: 'var(--neon-blue)' }}></div>
-      </div>
+      <Layout>
+        <div className="flex items-center justify-center h-64">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2" style={{ borderColor: 'var(--neon-blue)' }}></div>
+        </div>
+      </Layout>
     );
   }
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold text-white">Decision Log</h1>
-          <p className="mt-2 text-gray-300">
-            Track strategic decisions with reasoning and outcomes for accountability
-          </p>
+    <Layout>
+      <div className="space-y-4">
+        {/* Header */}
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-2xl font-bold text-white">Decision Log</h1>
+            <p className="mt-1 text-sm text-gray-300">
+              Track strategic decisions with reasoning and outcomes for accountability
+            </p>
+          </div>
+          <button
+            onClick={() => setShowForm(!showForm)}
+            className="px-4 py-2 text-white rounded-lg transition text-sm"
+            style={{ backgroundColor: 'var(--neon-blue)' }}
+          >
+            {showForm ? '✕ Cancel' : '+ Log Decision'}
+          </button>
         </div>
-        <button
-          onClick={() => setShowForm(!showForm)}
-          className="px-4 py-2 text-white rounded-lg transition"
-          style={{ backgroundColor: 'var(--neon-blue)' }}
-        >
-          {showForm ? '✕ Cancel' : '+ Log Decision'}
-        </button>
-      </div>
 
       {/* Add Decision Form */}
       {showForm && (
-        <div className="glass-card p-6">
-          <h2 className="text-xl font-semibold text-white mb-4">Log a New Decision</h2>
-          <form onSubmit={handleSubmit} className="space-y-4">
+        <div className="glass-card p-5">
+          <h2 className="text-lg font-semibold text-white mb-3">Log a New Decision</h2>
+          <form onSubmit={handleSubmit} className="space-y-3">
             <div>
               <label className="block text-sm font-medium text-gray-400 mb-1">
                 Decision Title *
@@ -148,7 +152,7 @@ const DecisionLog = () => {
                 type="text"
                 value={formData.title}
                 onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                className="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white focus:ring-2 focus:outline-none"
+                className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded-lg text-white text-sm focus:ring-2 focus:outline-none"
                 style={{ focusRingColor: 'var(--neon-blue)' }}
                 placeholder="e.g., Pivot to B2B model"
                 required
@@ -162,7 +166,7 @@ const DecisionLog = () => {
               <select
                 value={formData.category}
                 onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                className="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white focus:ring-2 focus:outline-none"
+                className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded-lg text-white text-sm focus:ring-2 focus:outline-none"
                 style={{ focusRingColor: 'var(--neon-blue)' }}
               >
                 <option value="strategic">Strategic</option>
@@ -180,7 +184,7 @@ const DecisionLog = () => {
               <textarea
                 value={formData.context}
                 onChange={(e) => setFormData({ ...formData, context: e.target.value })}
-                className="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white focus:ring-2 focus:outline-none"
+                className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded-lg text-white text-sm focus:ring-2 focus:outline-none"
                 rows="2"
                 placeholder="What situation led to this decision?"
               />
@@ -193,8 +197,8 @@ const DecisionLog = () => {
               <textarea
                 value={formData.options}
                 onChange={(e) => setFormData({ ...formData, options: e.target.value })}
-                className="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white focus:ring-2 focus:outline-none"
-                rows="3"
+                className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded-lg text-white text-sm focus:ring-2 focus:outline-none"
+                rows="2"
                 placeholder="Option 1&#10;Option 2&#10;Option 3"
               />
             </div>
@@ -207,7 +211,7 @@ const DecisionLog = () => {
                 type="text"
                 value={formData.chosenOption}
                 onChange={(e) => setFormData({ ...formData, chosenOption: e.target.value })}
-                className="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white focus:ring-2 focus:outline-none"
+                className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded-lg text-white text-sm focus:ring-2 focus:outline-none"
                 placeholder="What did you decide?"
                 required
               />
@@ -220,8 +224,8 @@ const DecisionLog = () => {
               <textarea
                 value={formData.reasoning}
                 onChange={(e) => setFormData({ ...formData, reasoning: e.target.value })}
-                className="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white focus:ring-2 focus:outline-none"
-                rows="3"
+                className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded-lg text-white text-sm focus:ring-2 focus:outline-none"
+                rows="2"
                 placeholder="Why did you make this decision?"
                 required
               />
@@ -234,7 +238,7 @@ const DecisionLog = () => {
               <textarea
                 value={formData.dataSupport}
                 onChange={(e) => setFormData({ ...formData, dataSupport: e.target.value })}
-                className="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white focus:ring-2 focus:outline-none"
+                className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded-lg text-white text-sm focus:ring-2 focus:outline-none"
                 rows="2"
                 placeholder="What data or evidence supports this?"
               />
@@ -247,7 +251,7 @@ const DecisionLog = () => {
               <textarea
                 value={formData.expectedOutcome}
                 onChange={(e) => setFormData({ ...formData, expectedOutcome: e.target.value })}
-                className="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white focus:ring-2 focus:outline-none"
+                className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded-lg text-white text-sm focus:ring-2 focus:outline-none"
                 rows="2"
                 placeholder="What do you expect to happen?"
               />
@@ -255,7 +259,7 @@ const DecisionLog = () => {
 
             <button
               type="submit"
-              className="w-full px-6 py-3 text-white rounded-lg transition font-semibold"
+              className="w-full px-5 py-2.5 text-white rounded-lg transition text-sm font-semibold"
               style={{ backgroundColor: 'var(--neon-blue)' }}
             >
               Log Decision
@@ -266,20 +270,20 @@ const DecisionLog = () => {
 
       {/* Decisions List */}
       {decisions.length === 0 ? (
-        <div className="glass-card p-12 text-center">
-          <p className="text-gray-400 mb-4">No decisions logged yet.</p>
+        <div className="glass-card p-10 text-center">
+          <p className="text-gray-400 mb-3">No decisions logged yet.</p>
           <p className="text-sm text-gray-500">
             Start tracking your strategic decisions to build accountability and learn from outcomes.
           </p>
         </div>
       ) : (
-        <div className="space-y-4">
+        <div className="space-y-3">
           {decisions.map((decision) => (
-            <div key={decision.id} className="glass-card p-6">
-              <div className="flex items-start justify-between mb-3">
+            <div key={decision.id} className="glass-card p-5">
+              <div className="flex items-start justify-between mb-2">
                 <div>
-                  <h3 className="text-xl font-semibold text-white">{decision.title}</h3>
-                  <div className="flex items-center gap-2 mt-2">
+                  <h3 className="text-lg font-semibold text-white">{decision.title}</h3>
+                  <div className="flex items-center gap-2 mt-1.5">
                     <span className={`px-2.5 py-0.5 rounded-full text-xs font-medium ${getCategoryColor(decision.category)}`}>
                       {decision.category}
                     </span>
@@ -294,38 +298,38 @@ const DecisionLog = () => {
               </div>
 
               {decision.context && (
-                <div className="mb-3">
+                <div className="mb-2">
                   <p className="text-sm font-medium text-gray-400">Context:</p>
-                  <p className="text-gray-300">{decision.context}</p>
+                  <p className="text-sm text-gray-300">{decision.context}</p>
                 </div>
               )}
 
-              <div className="mb-3">
+              <div className="mb-2">
                 <p className="text-sm font-medium text-gray-400">Chosen Option:</p>
-                <p className="text-white font-semibold">{decision.chosenOption}</p>
+                <p className="text-sm text-white font-semibold">{decision.chosenOption}</p>
               </div>
 
-              <div className="mb-3">
+              <div className="mb-2">
                 <p className="text-sm font-medium text-gray-400">Reasoning:</p>
-                <p className="text-gray-300">{decision.reasoning}</p>
+                <p className="text-sm text-gray-300">{decision.reasoning}</p>
               </div>
 
               {decision.dataSupport && (
-                <div className="mb-3">
+                <div className="mb-2">
                   <p className="text-sm font-medium text-gray-400">Data/Evidence:</p>
-                  <p className="text-gray-300">{decision.dataSupport}</p>
+                  <p className="text-sm text-gray-300">{decision.dataSupport}</p>
                 </div>
               )}
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 pt-4 border-t border-white/10">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-3 pt-3 border-t border-white/10">
                 <div>
                   <p className="text-sm font-medium text-gray-400">Expected Outcome:</p>
-                  <p className="text-gray-300">{decision.expectedOutcome || 'Not specified'}</p>
+                  <p className="text-sm text-gray-300">{decision.expectedOutcome || 'Not specified'}</p>
                 </div>
                 <div>
                   <p className="text-sm font-medium text-gray-400">Actual Outcome:</p>
                   {decision.actualOutcome ? (
-                    <p className="text-gray-300">{decision.actualOutcome}</p>
+                    <p className="text-sm text-gray-300">{decision.actualOutcome}</p>
                   ) : (
                     <button
                       onClick={() => {
@@ -346,7 +350,8 @@ const DecisionLog = () => {
           ))}
         </div>
       )}
-    </div>
+      </div>
+    </Layout>
   );
 };
 

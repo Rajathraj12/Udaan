@@ -1,0 +1,22 @@
+{
+  "short_name": "Udaan",
+  "name": "Udaan - Digital Infrastructure for Founders",
+  "description": "Manage execution, validate ideas, and scale your startup",
+  "icons": [
+    {
+      "src": "logo.png",
+      "sizes": "any",
+      "type": "image/png"
+    },
+    {
+      "src": "logo.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#2563eb",
+  "background_color": "#05050c",
+  "orientation": "portrait-primary"
+}

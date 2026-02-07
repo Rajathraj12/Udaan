@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useAuth } from '../context/AuthContext';
+import Logo from '../components/Logo';
 
 const AuthScreen = () => {
   const { login, signup } = useAuth();
@@ -65,7 +66,7 @@ const AuthScreen = () => {
       <ScrollView contentContainerStyle={styles.scrollContent}>
         {/* Logo and App Name */}
         <View style={styles.header}>
-          <Ionicons name="rocket" size={64} color="#2563EB" />
+          <Logo size={64} showText={false} />
           <Text style={styles.appName}>Udaan</Text>
           <Text style={styles.tagline}>Digital Infrastructure for Founders</Text>
         </View>

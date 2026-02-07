@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import Logo from '../components/Logo';
 import { 
   EnvelopeIcon, 
   LockClosedIcon, 
   UserIcon, 
-  RocketLaunchIcon,
   BriefcaseIcon 
 } from '@heroicons/react/24/outline';
 
@@ -71,7 +71,7 @@ export default function Signup() {
         {/* Logo and Header */}
         <div className="text-center mb-8">
           <div className="flex justify-center mb-4">
-            <RocketLaunchIcon className="h-12 w-12" style={{color: 'var(--neon-blue)'}} />
+            <Logo className="h-8 w-auto" />
           </div>
           <h2 className="text-3xl font-extrabold text-white">Start your journey</h2>
           <p className="mt-2 text-sm" style={{color: 'var(--text-gray)'}}>

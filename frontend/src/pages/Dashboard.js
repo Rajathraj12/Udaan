@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Layout from '../components/Layout';
+import TeamMemberDashboard from '../components/TeamMemberDashboard';
 import { useAuth } from '../contexts/AuthContext';
 import axios from 'axios';
 import { 
@@ -13,7 +14,33 @@ import {
 import { LineChart, Line, BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 export default function Dashboard() {
-  const { userProfile, currentUser } = useAuth();
+  const { userProfile, currentUser, loading } = useAuth();
+
+  // Show loading spinner while user profile loads
+  if (loading || !userProfile) {
+    return (
+      <Layout>
+        <div className="flex items-center justify-center h-64">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+        </div>
+      </Layout>
+    );
+  }
+
+  // Show team member dashboard for team members
+  if (userProfile.role === 'team_member') {
+    return (
+      <Layout>
+        <TeamMemberDashboard />
+      </Layout>
+    );
+  }
+
+  // Show founder dashboard below
+  return <FounderDashboard userProfile={userProfile} currentUser={currentUser} />;
+}
+
+function FounderDashboard({ userProfile, currentUser }) {
   const [suggestions, setSuggestions] = useState([]);
   const [stats, setStats] = useState({
     totalTasks: 24,
@@ -88,11 +115,11 @@ export default function Dashboard() {
         {/* Stats Grid */}
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {/* Total Tasks */}
-          <div className="bg-gray-800 overflow-hidden shadow-sm rounded-lg border border-gray-700">
+          <div className="glass-card overflow-hidden shadow-sm">
             <div className="p-5">
               <div className="flex items-center">
                 <div className="flex-shrink-0">
-                  <CheckCircleIcon className="h-6 w-6 text-blue-500" />
+                  <CheckCircleIcon className="h-6 w-6" style={{ color: 'var(--neon-blue)' }} />
                 </div>
                 <div className="ml-5 w-0 flex-1">
                   <dl>
@@ -102,19 +129,19 @@ export default function Dashboard() {
                 </div>
               </div>
             </div>
-            <div className="bg-gray-900 border-t border-gray-700 px-5 py-3">
-              <div className="text-sm text-blue-400">
+            <div className="bg-white/5 border-t border-white/10 px-5 py-3">
+              <div className="text-sm" style={{ color: 'var(--neon-blue)' }}>
                 {stats.completedTasks} completed
               </div>
             </div>
           </div>
 
           {/* Pending Tasks */}
-          <div className="bg-gray-800 overflow-hidden shadow-sm rounded-lg border border-gray-700">
+          <div className="glass-card overflow-hidden shadow-sm">
             <div className="p-5">
               <div className="flex items-center">
                 <div className="flex-shrink-0">
-                  <ClockIcon className="h-6 w-6 text-orange-500" />
+                  <ClockIcon className="h-6 w-6 text-orange-400" />
                 </div>
                 <div className="ml-5 w-0 flex-1">
                   <dl>
@@ -124,7 +151,7 @@ export default function Dashboard() {
                 </div>
               </div>
             </div>
-            <div className="bg-gray-900 border-t border-gray-700 px-5 py-3">
+            <div className="bg-white/5 border-t border-white/10 px-5 py-3">
               <div className="text-sm text-orange-400">
                 {Math.round((stats.completedTasks / stats.totalTasks) * 100)}% completion rate
               </div>
@@ -132,11 +159,11 @@ export default function Dashboard() {
           </div>
 
           {/* Milestones */}
-          <div className="bg-gray-800 overflow-hidden shadow-sm rounded-lg border border-gray-700">
+          <div className="glass-card overflow-hidden shadow-sm">
             <div className="p-5">
               <div className="flex items-center">
                 <div className="flex-shrink-0">
-                  <FlagIcon className="h-6 w-6 text-purple-500" />
+                  <FlagIcon className="h-6 w-6" style={{ color: 'var(--neon-purple)' }} />
                 </div>
                 <div className="ml-5 w-0 flex-1">
                   <dl>
@@ -146,15 +173,15 @@ export default function Dashboard() {
                 </div>
               </div>
             </div>
-            <div className="bg-gray-900 border-t border-gray-700 px-5 py-3">
-              <div className="text-sm text-purple-400">
+            <div className="bg-white/5 border-t border-white/10 px-5 py-3">
+              <div className="text-sm" style={{ color: 'var(--neon-purple)' }}>
                 {stats.completedMilestones} achieved
               </div>
             </div>
           </div>
 
           {/* Progress Score */}
-          <div className="bg-gradient-to-br from-blue-600 to-indigo-600 overflow-hidden shadow-sm rounded-lg">
+          <div className="glass-card overflow-hidden shadow-sm" style={{ background: 'linear-gradient(135deg, rgba(34, 211, 238, 0.2), rgba(168, 85, 247, 0.2))' }}>
             <div className="p-5">
               <div className="flex items-center">
                 <div className="flex-shrink-0">
@@ -162,13 +189,13 @@ export default function Dashboard() {
                 </div>
                 <div className="ml-5 w-0 flex-1">
                   <dl>
-                    <dt className="text-sm font-medium text-blue-100 truncate">Progress Score</dt>
+                    <dt className="text-sm font-medium text-gray-300 truncate">Progress Score</dt>
                     <dd className="text-2xl font-bold text-white">{stats.progressScore}%</dd>
                   </dl>
                 </div>
               </div>
             </div>
-            <div className="bg-white bg-opacity-20 px-5 py-3">
+            <div className="bg-white/20 px-5 py-3">
               <div className="text-sm text-white flex items-center">
                 <ArrowTrendingUpIcon className="h-4 w-4 mr-1" />
                 On track for growth
@@ -180,22 +207,22 @@ export default function Dashboard() {
         {/* Charts Section */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Task Completion Trend */}
-          <div className="bg-gray-800 p-6 rounded-lg shadow-sm border border-gray-700">
+          <div className="glass-card p-6">
             <h3 className="text-lg font-semibold text-white mb-4">Task Completion Trend</h3>
             <ResponsiveContainer width="100%" height={250}>
               <LineChart data={taskCompletionData}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
                 <XAxis dataKey="name" stroke="#9CA3AF" />
                 <YAxis stroke="#9CA3AF" />
-                <Tooltip contentStyle={{ backgroundColor: '#1F2937', border: '1px solid #374151', color: '#fff' }} />
+                <Tooltip contentStyle={{ backgroundColor: 'rgba(0, 0, 0, 0.8)', border: '1px solid rgba(255, 255, 255, 0.1)', color: '#fff' }} />
                 <Legend wrapperStyle={{ color: '#9CA3AF' }} />
-                <Line type="monotone" dataKey="completed" stroke="#60A5FA" strokeWidth={2} />
+                <Line type="monotone" dataKey="completed" stroke="var(--neon-blue)" strokeWidth={2} />
               </LineChart>
             </ResponsiveContainer>
           </div>
 
           {/* Tasks by Status */}
-          <div className="bg-gray-800 p-6 rounded-lg shadow-sm border border-gray-700">
+          <div className="glass-card p-6">
             <h3 className="text-lg font-semibold text-white mb-4">Tasks by Status</h3>
             <ResponsiveContainer width="100%" height={250}>
               <PieChart>
@@ -213,31 +240,31 @@ export default function Dashboard() {
                     <Cell key={`cell-${index}`} fill={entry.color} />
                   ))}
                 </Pie>
-                <Tooltip contentStyle={{ backgroundColor: '#1F2937', border: '1px solid #374151', color: '#fff' }} />
+                <Tooltip contentStyle={{ backgroundColor: 'rgba(0, 0, 0, 0.8)', border: '1px solid rgba(255, 255, 255, 0.1)', color: '#fff' }} />
               </PieChart>
             </ResponsiveContainer>
           </div>
         </div>
 
         {/* Tasks by Priority */}
-        <div className="bg-gray-800 p-6 rounded-lg shadow-sm border border-gray-700">
+        <div className="glass-card p-6">
           <h3 className="text-lg font-semibold text-white mb-4">Tasks by Priority</h3>
           <ResponsiveContainer width="100%" height={250}>
             <BarChart data={tasksByPriority}>
               <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
               <XAxis dataKey="name" stroke="#9CA3AF" />
               <YAxis stroke="#9CA3AF" />
-              <Tooltip contentStyle={{ backgroundColor: '#1F2937', border: '1px solid #374151', color: '#fff' }} />
+              <Tooltip contentStyle={{ backgroundColor: 'rgba(0, 0, 0, 0.8)', border: '1px solid rgba(255, 255, 255, 0.1)', color: '#fff' }} />
               <Legend wrapperStyle={{ color: '#9CA3AF' }} />
-              <Bar dataKey="value" fill="#60A5FA" />
+              <Bar dataKey="value" fill="var(--neon-blue)" />
             </BarChart>
           </ResponsiveContainer>
         </div>
 
         {/* What Should I Do Next? - AI Insights */}
-        <div className="bg-gradient-to-r from-gray-800 to-gray-700 p-6 rounded-lg shadow-sm border border-gray-600">
+        <div className="glass-card p-6" style={{ background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02))' }}>
           <div className="flex items-center mb-4">
-            <LightBulbIcon className="h-7 w-7 text-yellow-400 mr-2" />
+            <LightBulbIcon className="h-7 w-7" style={{ color: 'var(--neon-green)' }} className="mr-2" />
             <h3 className="text-xl font-bold text-white">What Should I Do Next?</h3>
           </div>
           
@@ -250,33 +277,33 @@ export default function Dashboard() {
                 return (
                   <div
                     key={index}
-                    className={`p-4 rounded-lg border-l-4 bg-gray-900 ${
+                    className={`p-4 rounded-lg border-l-4 bg-white/5 ${
                       insightType === 'success'
-                        ? 'border-green-500'
+                        ? 'border-[var(--neon-green)]'
                         : insightType === 'warning'
-                        ? 'border-orange-500'
-                        : 'border-blue-500'
+                        ? 'border-orange-400'
+                        : 'border-[var(--neon-blue)]'
                     }`}
                   >
                     <div className="flex items-start justify-between">
                       <div className="flex-1">
                         <div className="flex items-center gap-2 mb-1">
                           <span className="text-2xl">{suggestion.icon}</span>
-                          <h4 className="font-semibold text-gray-900">{suggestion.action}</h4>
+                          <h4 className="font-semibold text-white">{suggestion.action}</h4>
                           <span
                             className={`px-2 py-0.5 rounded-full text-xs font-medium ${
                               suggestion.priority === 'high'
-                                ? 'bg-red-100 text-red-800'
+                                ? 'bg-red-500/20 text-red-400'
                                 : suggestion.priority === 'medium'
-                                ? 'bg-yellow-100 text-yellow-800'
-                                : 'bg-blue-100 text-blue-800'
+                                ? 'bg-yellow-500/20 text-yellow-400'
+                                : 'bg-blue-500/20 text-blue-400'
                             }`}
                           >
                             {suggestion.priority.toUpperCase()}
                           </span>
                         </div>
-                        <p className="text-sm text-gray-700 mb-2">{suggestion.description}</p>
-                        <p className="text-xs text-gray-500 italic">{suggestion.category}</p>
+                        <p className="text-sm text-gray-300 mb-2">{suggestion.description}</p>
+                        <p className="text-xs text-gray-400 italic">{suggestion.category}</p>
                       </div>
                     </div>
                   </div>

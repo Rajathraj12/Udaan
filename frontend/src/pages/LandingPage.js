@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Logo from '../components/Logo';
 
 // --- 1. The Complete CSS Stylesheet as a String ---
 const styles = `
@@ -137,8 +138,21 @@ const styles = `
   }
 
   .login-link {
-    font-weight: 500;
-    font-size: 0.9rem;
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: white;
+    padding: 12px 28px;
+    background: transparent;
+    border: 2px solid rgba(34, 211, 238, 0.5);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+  }
+
+  .login-link:hover {
+    background: rgba(34, 211, 238, 0.15);
+    border-color: var(--neon-blue);
+    box-shadow: 0 0 20px rgba(34, 211, 238, 0.4);
+    transform: translateY(-2px);
   }
 
   /* --- Hero Section --- */
@@ -290,11 +304,11 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       <div className="logo">
-        <span className="logo-icon">🚀</span> Udaan
+        <Logo className="w-auto h-14" />
       </div>
       <div className="nav-links">
         <Link to="/login" className="login-link">Login</Link>
-        <Link to="/signup" className="btn btn-primary">Get Started</Link>
+        <Link to="/signup" className="btn btn-gradient">Get Started →</Link>
       </div>
     </nav>
   );

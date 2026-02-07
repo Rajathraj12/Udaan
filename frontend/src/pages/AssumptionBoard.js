@@ -84,38 +84,38 @@ const AssumptionBoard = () => {
 
   const getCategoryColor = (category) => {
     const colors = {
-      customer: 'bg-blue-100 text-blue-800',
-      problem: 'bg-red-100 text-red-800',
-      solution: 'bg-green-100 text-green-800',
-      market: 'bg-purple-100 text-purple-800',
-      'business model': 'bg-yellow-100 text-yellow-800',
+      customer: 'bg-blue-500/20 text-blue-400 border border-blue-500/30',
+      problem: 'bg-red-500/20 text-red-400 border border-red-500/30',
+      solution: 'bg-green-500/20 text-green-400 border border-green-500/30',
+      market: 'bg-purple-500/20 text-purple-400 border border-purple-500/30',
+      'business model': 'bg-yellow-500/20 text-yellow-400 border border-yellow-500/30',
     };
-    return colors[category] || 'bg-gray-100 text-gray-800';
+    return colors[category] || 'bg-gray-500/20 text-gray-400 border border-gray-500/30';
   };
 
   const getStatusColor = (status) => {
     const colors = {
-      untested: 'bg-gray-100 text-gray-800',
-      testing: 'bg-blue-100 text-blue-800',
-      validated: 'bg-green-100 text-green-800',
-      invalidated: 'bg-red-100 text-red-800',
+      untested: 'bg-gray-500/20 text-gray-400 border border-gray-500/30',
+      testing: 'bg-blue-500/20 text-blue-400 border border-blue-500/30',
+      validated: 'bg-green-500/20 text-green-400 border border-green-500/30',
+      invalidated: 'bg-red-500/20 text-red-400 border border-red-500/30',
     };
-    return colors[status] || 'bg-gray-100 text-gray-800';
+    return colors[status] || 'bg-gray-500/20 text-gray-400 border border-gray-500/30';
   };
 
   const getPriorityColor = (priority) => {
     const colors = {
-      high: 'bg-red-100 text-red-800',
-      medium: 'bg-yellow-100 text-yellow-800',
-      low: 'bg-green-100 text-green-800',
+      high: 'bg-red-500/20 text-red-400 border border-red-500/30',
+      medium: 'bg-yellow-500/20 text-yellow-400 border border-yellow-500/30',
+      low: 'bg-green-500/20 text-green-400 border border-green-500/30',
     };
-    return colors[priority] || 'bg-gray-100 text-gray-800';
+    return colors[priority] || 'bg-gray-500/20 text-gray-400 border border-gray-500/30';
   };
 
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2" style={{ borderColor: 'var(--neon-blue)' }}></div>
       </div>
     );
   }
@@ -133,14 +133,15 @@ const AssumptionBoard = () => {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Assumption Board</h1>
-          <p className="mt-2 text-gray-600">
+          <h1 className="text-3xl font-bold text-white">Assumption Board</h1>
+          <p className="mt-2 text-gray-300">
             Track hypotheses and link customer feedback for validation
           </p>
         </div>
         <button
           onClick={() => setShowForm(!showForm)}
-          className="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition"
+          className="px-4 py-2 text-white rounded-lg transition"
+          style={{ backgroundColor: 'var(--neon-blue)' }}
         >
           {showForm ? '✕ Cancel' : '+ Add Assumption'}
         </button>
@@ -148,17 +149,17 @@ const AssumptionBoard = () => {
 
       {/* Add Assumption Form */}
       {showForm && (
-        <div className="bg-white rounded-lg shadow-md p-6">
-          <h2 className="text-xl font-semibold text-gray-900 mb-4">Add New Assumption</h2>
+        <div className="glass-card p-6">
+          <h2 className="text-xl font-semibold text-white mb-4">Add New Assumption</h2>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-400 mb-1">
                 Hypothesis Statement *
               </label>
               <textarea
                 value={formData.hypothesis}
                 onChange={(e) => setFormData({ ...formData, hypothesis: e.target.value })}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-primary-500 focus:border-primary-500"
+                className="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white focus:ring-2 focus:outline-none"
                 rows="3"
                 placeholder="e.g., Small businesses struggle with manual invoicing and would pay $50/month for automation"
                 required
@@ -167,13 +168,13 @@ const AssumptionBoard = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-gray-400 mb-1">
                   Category
                 </label>
                 <select
                   value={formData.category}
                   onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-primary-500 focus:border-primary-500"
+                  className="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white focus:ring-2 focus:outline-none"
                 >
                   <option value="customer">Customer</option>
                   <option value="problem">Problem</option>
@@ -184,13 +185,13 @@ const AssumptionBoard = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-gray-400 mb-1">
                   Priority
                 </label>
                 <select
                   value={formData.priority}
                   onChange={(e) => setFormData({ ...formData, priority: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-primary-500 focus:border-primary-500"
+                  className="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white focus:ring-2 focus:outline-none"
                 >
                   <option value="high">High</option>
                   <option value="medium">Medium</option>
@@ -199,14 +200,14 @@ const AssumptionBoard = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-gray-400 mb-1">
                   Test Method
                 </label>
                 <input
                   type="text"
                   value={formData.testMethod}
                   onChange={(e) => setFormData({ ...formData, testMethod: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-primary-500 focus:border-primary-500"
+                  className="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white focus:ring-2 focus:outline-none"
                   placeholder="e.g., 10 interviews"
                 />
               </div>
@@ -214,7 +215,8 @@ const AssumptionBoard = () => {
 
             <button
               type="submit"
-              className="w-full px-6 py-3 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition font-semibold"
+              className="w-full px-6 py-3 text-white rounded-lg transition font-semibold"
+              style={{ backgroundColor: 'var(--neon-blue)' }}
             >
               Add Assumption
             </button>
@@ -225,17 +227,17 @@ const AssumptionBoard = () => {
       {/* Board Columns */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         {['untested', 'testing', 'validated', 'invalidated'].map((status) => (
-          <div key={status} className="bg-gray-50 rounded-lg p-4">
+          <div key={status} className="glass-card p-4">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="font-semibold text-gray-900 capitalize">{status}</h3>
-              <span className="bg-gray-200 text-gray-700 px-2 py-1 rounded-full text-xs font-medium">
+              <h3 className="font-semibold text-white capitalize">{status}</h3>
+              <span className="bg-white/10 text-gray-300 px-2 py-1 rounded-full text-xs font-medium">
                 {grouped[status].length}
               </span>
             </div>
 
             <div className="space-y-3">
               {grouped[status].map((assumption) => (
-                <div key={assumption.id} className="bg-white rounded-lg shadow p-4">
+                <div key={assumption.id} className="bg-white/5 rounded-lg p-4">
                   <div className="flex items-start justify-between mb-2">
                     <span className={`px-2 py-1 rounded text-xs font-medium ${getCategoryColor(assumption.category)}`}>
                       {assumption.category}
@@ -245,16 +247,16 @@ const AssumptionBoard = () => {
                     </span>
                   </div>
 
-                  <p className="text-sm text-gray-700 mb-3">{assumption.hypothesis}</p>
+                  <p className="text-sm text-gray-300 mb-3">{assumption.hypothesis}</p>
 
                   {/* Validation Score */}
                   {assumption.evidence && assumption.evidence.length > 0 && (
                     <div className="mb-3">
                       <div className="flex items-center justify-between text-xs mb-1">
-                        <span className="text-gray-600">Validation</span>
-                        <span className="font-medium">{assumption.validationScore}%</span>
+                        <span className="text-gray-400">Validation</span>
+                        <span className="font-medium text-white">{assumption.validationScore}%</span>
                       </div>
-                      <div className="w-full bg-gray-200 rounded-full h-2">
+                      <div className="w-full bg-gray-700/50 rounded-full h-2">
                         <div
                           className={`h-2 rounded-full ${
                             assumption.validationScore >= 70
@@ -266,7 +268,7 @@ const AssumptionBoard = () => {
                           style={{ width: `${assumption.validationScore}%` }}
                         ></div>
                       </div>
-                      <p className="text-xs text-gray-500 mt-1">
+                      <p className="text-xs text-gray-400 mt-1">
                         {assumption.evidence.length} evidence item(s)
                       </p>
                     </div>
@@ -281,7 +283,8 @@ const AssumptionBoard = () => {
                         linkFeedback(assumption.id, feedbacks[parseInt(feedbackId) - 1].id, supports);
                       }
                     }}
-                    className="w-full text-xs text-primary-600 hover:text-primary-700 font-medium"
+                    className="w-full text-xs font-medium"
+                    style={{ color: 'var(--neon-blue)' }}
                   >
                     + Link Feedback
                   </button>
@@ -289,7 +292,7 @@ const AssumptionBoard = () => {
               ))}
 
               {grouped[status].length === 0 && (
-                <p className="text-sm text-gray-400 text-center py-4">No items</p>
+                <p className="text-sm text-gray-500 text-center py-4">No items</p>
               )}
             </div>
           </div>
@@ -297,24 +300,24 @@ const AssumptionBoard = () => {
       </div>
 
       {/* Stats */}
-      <div className="bg-white rounded-lg shadow-md p-6">
-        <h2 className="text-xl font-semibold text-gray-900 mb-4">Validation Progress</h2>
+      <div className="glass-card p-6">
+        <h2 className="text-xl font-semibold text-white mb-4">Validation Progress</h2>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <div className="text-center">
             <p className="text-3xl font-bold text-gray-400">{grouped.untested.length}</p>
-            <p className="text-sm text-gray-600">Untested</p>
+            <p className="text-sm text-gray-300">Untested</p>
           </div>
           <div className="text-center">
-            <p className="text-3xl font-bold text-blue-600">{grouped.testing.length}</p>
-            <p className="text-sm text-gray-600">Testing</p>
+            <p className="text-3xl font-bold" style={{ color: 'var(--neon-blue)' }}>{grouped.testing.length}</p>
+            <p className="text-sm text-gray-300">Testing</p>
           </div>
           <div className="text-center">
-            <p className="text-3xl font-bold text-green-600">{grouped.validated.length}</p>
-            <p className="text-sm text-gray-600">Validated</p>
+            <p className="text-3xl font-bold" style={{ color: 'var(--neon-green)' }}>{grouped.validated.length}</p>
+            <p className="text-sm text-gray-300">Validated</p>
           </div>
           <div className="text-center">
-            <p className="text-3xl font-bold text-red-600">{grouped.invalidated.length}</p>
-            <p className="text-sm text-gray-600">Invalidated</p>
+            <p className="text-3xl font-bold text-red-400">{grouped.invalidated.length}</p>
+            <p className="text-sm text-gray-300">Invalidated</p>
           </div>
         </div>
       </div>

@@ -25,17 +25,15 @@ export default function Tasks() {
   const isFounder = userProfile?.role === 'founder';
 
   useEffect(() => {
-    if (currentUser && userProfile) {
+    if (currentUser) {
       fetchTasks();
       if (isFounder) {
         fetchTeamMembers();
       }
     }
-  }, [currentUser?.uid, userProfile?.role]); // Only re-run when user ID or role changes
+  }, [currentUser, isFounder]);
 
   const fetchTasks = async () => {
-    if (!currentUser) return;
-    
     try {
       const token = await currentUser.getIdToken();
       const response = await axios.get(`${API_BASE_URL}/tasks`, {
@@ -51,138 +49,15 @@ export default function Tasks() {
         );
       }
       
-      // If no tasks, use mock data
-      if (filteredTasks.length === 0) {
-        filteredTasks = getMockTasks();
-      }
-      
       setTasks(filteredTasks);
       setLoading(false);
     } catch (error) {
       console.error('Error fetching tasks:', error);
-      // Use mock data on error
-      setTasks(getMockTasks());
       setLoading(false);
     }
   };
 
-  const getMockTasks = () => {
-    if (isFounder) {
-      return [
-        {
-          id: 'mock-1',
-          title: 'Complete MVP features',
-          description: 'Finish core functionality for minimum viable product',
-          status: 'in_progress',
-          priority: 'high',
-          dueDate: '2026-02-20',
-          assignedToName: 'Alex Chen',
-          assignedToEmail: 'team@startup.com',
-        },
-        {
-          id: 'mock-2',
-          title: 'User research interviews',
-          description: 'Conduct 10 user interviews to validate assumptions',
-          status: 'todo',
-          priority: 'high',
-          dueDate: '2026-02-25',
-          assignedToName: 'Jordan Smith',
-          assignedToEmail: 'developer@startup.com',
-        },
-        {
-          id: 'mock-3',
-          title: 'Design system documentation',
-          description: 'Document all design components and guidelines',
-          status: 'in_progress',
-          priority: 'medium',
-          dueDate: '2026-03-01',
-          assignedToName: 'Alex Chen',
-          assignedToEmail: 'team@startup.com',
-        },
-        {
-          id: 'mock-4',
-          title: 'Setup analytics tracking',
-          description: 'Implement Google Analytics and custom event tracking',
-          status: 'todo',
-          priority: 'medium',
-          dueDate: '2026-02-28',
-          assignedToName: 'Jordan Smith',
-          assignedToEmail: 'developer@startup.com',
-        },
-        {
-          id: 'mock-5',
-          title: 'Competitor analysis',
-          description: 'Research and document top 5 competitors',
-          status: 'completed',
-          priority: 'high',
-          dueDate: '2026-02-10',
-          assignedToName: 'Founder',
-        },
-        {
-          id: 'mock-6',
-          title: 'Write blog post',
-          description: 'Create content for launch announcement',
-          status: 'completed',
-          priority: 'low',
-          dueDate: '2026-02-08',
-          assignedToName: 'Alex Chen',
-          assignedToEmail: 'team@startup.com',
-        },
-      ];
-    } else {
-      return [
-        {
-          id: 'mock-1',
-          title: 'Complete MVP features',
-          description: 'Finish core functionality for minimum viable product',
-          status: 'in_progress',
-          priority: 'high',
-          dueDate: '2026-02-20',
-          assignedToName: userProfile?.displayName || 'You',
-        },
-        {
-          id: 'mock-2',
-          title: 'Design system documentation',
-          description: 'Document all design components and guidelines',
-          status: 'in_progress',
-          priority: 'medium',
-          dueDate: '2026-03-01',
-          assignedToName: userProfile?.displayName || 'You',
-        },
-        {
-          id: 'mock-3',
-          title: 'Write unit tests',
-          description: 'Add test coverage for authentication module',
-          status: 'todo',
-          priority: 'medium',
-          dueDate: '2026-02-22',
-          assignedToName: userProfile?.displayName || 'You',
-        },
-        {
-          id: 'mock-4',
-          title: 'Review code changes',
-          description: 'Review and merge pending pull requests',
-          status: 'todo',
-          priority: 'low',
-          dueDate: '2026-02-18',
-          assignedToName: userProfile?.displayName || 'You',
-        },
-        {
-          id: 'mock-5',
-          title: 'Write blog post',
-          description: 'Create content for launch announcement',
-          status: 'completed',
-          priority: 'low',
-          dueDate: '2026-02-08',
-          assignedToName: userProfile?.displayName || 'You',
-        },
-      ];
-    }
-  };
-
   const fetchTeamMembers = async () => {
-    if (!currentUser || !userProfile?.startupId) return;
-    
     try {
       const token = await currentUser.getIdToken();
       const response = await axios.get(`${API_BASE_URL}/startups/${userProfile.startupId}/team`, {
@@ -277,7 +152,7 @@ export default function Tasks() {
     return (
       <Layout>
         <div className="flex items-center justify-center h-64">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2" style={{ borderColor: 'var(--neon-blue)' }}></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
         </div>
       </Layout>
     );
@@ -299,8 +174,7 @@ export default function Tasks() {
           {isFounder && (
             <button
               onClick={() => setShowNewTaskModal(true)}
-              className="text-white px-4 py-2 rounded-lg transition flex items-center"
-              style={{ backgroundColor: 'var(--neon-blue)' }}
+              className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition flex items-center"
             >
               <PlusIcon className="h-5 w-5 mr-2" />
               New Task
@@ -458,15 +332,14 @@ export default function Tasks() {
               <div className="flex gap-3 mt-6">
                 <button
                   type="submit"
-                  className="flex-1 text-white px-4 py-2 rounded-lg transition"
-                  style={{ backgroundColor: 'var(--neon-blue)' }}
+                  className="flex-1 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
                 >
                   Create Task
                 </button>
                 <button
                   type="button"
                   onClick={() => setShowNewTaskModal(false)}
-                  className="flex-1 bg-white/10 text-white px-4 py-2 rounded-lg hover:bg-white/20 transition"
+                  className="flex-1 bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition"
                 >
                   Cancel
                 </button>

@@ -1,5 +1,12 @@
 # Udaan - Digital Infrastructure for Early-Stage Founders
 
+<div align="center">
+  <img src="frontend/public/logo.png" alt="Udaan Logo" width="200" height="200">
+  <p><em>Empowering founders to build, validate, and scale</em></p>
+</div>
+
+---
+
 A unified digital platform that acts as an operational workspace for early-stage founders, helping them manage execution, validate ideas, collaborate with their teams, and gain actionable insights to scale efficiently.
 
 **Available on Web and Mobile!**

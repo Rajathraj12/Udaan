@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
+import ProtectedRoute from './components/ProtectedRoute';
 
 // Pages
 import LandingPage from './pages/LandingPage';
@@ -19,16 +20,10 @@ import InvestorReadiness from './pages/InvestorReadiness';
 import DecisionLog from './pages/DecisionLog';
 import AssumptionBoard from './pages/AssumptionBoard';
 
-// Protected Route Component
-const ProtectedRoute = ({ children }) => {
-  const { currentUser } = useAuth();
-  return currentUser ? children : <Navigate to="/login" />;
-};
-
 // Public Route Component (redirect if logged in)
 const PublicRoute = ({ children }) => {
   const { currentUser } = useAuth();
-  return !currentUser ? children : <Navigate to="/dashboard" />;
+  return !currentUser ? children : <Navigate to="/dashboard" replace />;
 };
 
 function AppRoutes() {
@@ -82,7 +77,7 @@ function AppRoutes() {
         <Route 
           path="/feedback" 
           element={
-            <ProtectedRoute>
+            <ProtectedRoute allowedRoles={['founder']}>
               <Feedback />
             </ProtectedRoute>
           } 
@@ -90,7 +85,7 @@ function AppRoutes() {
         <Route 
           path="/analytics" 
           element={
-            <ProtectedRoute>
+            <ProtectedRoute allowedRoles={['founder']}>
               <Analytics />
             </ProtectedRoute>
           } 
@@ -98,7 +93,7 @@ function AppRoutes() {
         <Route 
           path="/startup-profile" 
           element={
-            <ProtectedRoute>
+            <ProtectedRoute allowedRoles={['founder']}>
               <StartupProfile />
             </ProtectedRoute>
           } 
@@ -114,7 +109,7 @@ function AppRoutes() {
         <Route 
           path="/health" 
           element={
-            <ProtectedRoute>
+            <ProtectedRoute allowedRoles={['founder']}>
               <HealthMeter />
             </ProtectedRoute>
           } 
@@ -122,7 +117,7 @@ function AppRoutes() {
         <Route 
           path="/investor-readiness" 
           element={
-            <ProtectedRoute>
+            <ProtectedRoute allowedRoles={['founder']}>
               <InvestorReadiness />
             </ProtectedRoute>
           } 
@@ -130,7 +125,7 @@ function AppRoutes() {
         <Route 
           path="/decisions" 
           element={
-            <ProtectedRoute>
+            <ProtectedRoute allowedRoles={['founder']}>
               <DecisionLog />
             </ProtectedRoute>
           } 
@@ -138,7 +133,7 @@ function AppRoutes() {
         <Route 
           path="/assumptions" 
           element={
-            <ProtectedRoute>
+            <ProtectedRoute allowedRoles={['founder']}>
               <AssumptionBoard />
             </ProtectedRoute>
           } 

@@ -19,6 +19,7 @@ import HealthMeter from './pages/HealthMeter';
 import InvestorReadiness from './pages/InvestorReadiness';
 import DecisionLog from './pages/DecisionLog';
 import AssumptionBoard from './pages/AssumptionBoard';
+import PublicFeedbackForm from './pages/PublicFeedbackForm';
 
 // Public Route Component (redirect if logged in)
 const PublicRoute = ({ children }) => {
@@ -138,6 +139,10 @@ function AppRoutes() {
             </ProtectedRoute>
           } 
         />
+
+        {/* Public Feedback Form (no auth required) */}
+        <Route path="/f/:slug" element={<PublicFeedbackForm />} />
+        <Route path="/feedback/:formId" element={<PublicFeedbackForm />} />
 
         {/* Catch all */}
         <Route path="*" element={<Navigate to="/" />} />

@@ -15,13 +15,19 @@ router.get('/', authMiddleware, async (req, res) => {
 
     const assumptionsSnapshot = await db.collection('assumptions')
       .where('startupId', '==', startupId)
-      .orderBy('createdAt', 'desc')
       .get();
 
-    const assumptions = assumptionsSnapshot.docs.map(doc => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
+    const assumptions = assumptionsSnapshot.docs
+      .map(doc => ({
+        id: doc.id,
+        ...doc.data(),
+      }))
+      .sort((a, b) => {
+        // Sort by createdAt in descending order (newest first)
+        const dateA = a.createdAt?.toDate?.() || new Date(a.createdAt || 0);
+        const dateB = b.createdAt?.toDate?.() || new Date(b.createdAt || 0);
+        return dateB - dateA;
+      });
 
     res.json(assumptions);
 

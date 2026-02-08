@@ -3,6 +3,28 @@ const router = express.Router();
 const { db } = require('../config/firebase');
 const authMiddleware = require('../middleware/auth');
 
+// Get my startup
+router.get('/my-startup', authMiddleware, async (req, res) => {
+  try {
+    const { startupId } = req.user;
+    
+    if (!startupId) {
+      return res.status(404).json({ error: 'No startup associated with user' });
+    }
+
+    const startupDoc = await db.collection('startups').doc(startupId).get();
+    
+    if (!startupDoc.exists) {
+      return res.status(404).json({ error: 'Startup not found' });
+    }
+
+    res.json({ id: startupDoc.id, ...startupDoc.data() });
+  } catch (error) {
+    console.error('Get my startup error:', error);
+    res.status(500).json({ error: 'Failed to fetch startup' });
+  }
+});
+
 // Get startup profile
 router.get('/:id', authMiddleware, async (req, res) => {
   try {

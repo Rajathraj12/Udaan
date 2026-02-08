@@ -85,13 +85,13 @@ const AssumptionBoard = () => {
 
   const getCategoryColor = (category) => {
     const colors = {
-      customer: 'bg-blue-500/20 text-blue-400 border border-blue-500/30',
-      problem: 'bg-red-500/20 text-red-400 border border-red-500/30',
-      solution: 'bg-green-500/20 text-green-400 border border-green-500/30',
-      market: 'bg-purple-500/20 text-purple-400 border border-purple-500/30',
-      'business model': 'bg-yellow-500/20 text-yellow-400 border border-yellow-500/30',
+      customer: 'bg-blue-600 text-white',
+      problem: 'bg-red-600 text-white',
+      solution: 'bg-green-600 text-white',
+      market: 'bg-purple-600 text-white',
+      'business model': 'bg-yellow-600 text-white',
     };
-    return colors[category] || 'bg-gray-500/20 text-gray-400 border border-gray-500/30';
+    return colors[category] || 'bg-gray-600 text-white';
   };
 
   const getStatusColor = (status) => {
@@ -106,11 +106,11 @@ const AssumptionBoard = () => {
 
   const getPriorityColor = (priority) => {
     const colors = {
-      high: 'bg-red-500/20 text-red-400 border border-red-500/30',
-      medium: 'bg-yellow-500/20 text-yellow-400 border border-yellow-500/30',
-      low: 'bg-green-500/20 text-green-400 border border-green-500/30',
+      high: 'bg-red-600 text-white',
+      medium: 'bg-yellow-600 text-white',
+      low: 'bg-green-600 text-white',
     };
-    return colors[priority] || 'bg-gray-500/20 text-gray-400 border border-gray-500/30';
+    return colors[priority] || 'bg-gray-600 text-white';
   };
 
   if (loading) {
@@ -133,19 +133,18 @@ const AssumptionBoard = () => {
 
   return (
     <Layout>
-      <div className="space-y-4">
+      <div className="space-y-6">
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-bold text-white">Assumption Board</h1>
-            <p className="mt-1 text-sm text-gray-300">
+            <h1 className="text-3xl font-bold text-white">Assumption Board</h1>
+            <p className="mt-2 text-sm text-gray-400">
               Track hypotheses and link customer feedback for validation
             </p>
           </div>
           <button
             onClick={() => setShowForm(!showForm)}
-            className="px-4 py-2 text-white rounded-lg transition text-sm"
-            style={{ backgroundColor: 'var(--neon-blue)' }}
+            className="px-6 py-3 bg-gradient-to-r from-blue-600 to-cyan-600 text-white font-semibold rounded-xl hover:from-blue-500 hover:to-cyan-500 transition-all shadow-lg shadow-blue-500/30"
           >
             {showForm ? '✕ Cancel' : '+ Add Assumption'}
           </button>
@@ -153,32 +152,32 @@ const AssumptionBoard = () => {
 
       {/* Add Assumption Form */}
       {showForm && (
-        <div className="glass-card p-5">
-          <h2 className="text-lg font-semibold text-white mb-3">Add New Assumption</h2>
-          <form onSubmit={handleSubmit} className="space-y-3">
+        <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6">
+          <h2 className="text-xl font-bold text-white mb-4">Add New Assumption</h2>
+          <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-400 mb-1">
+              <label className="block text-sm font-semibold text-gray-300 mb-2">
                 Hypothesis Statement *
               </label>
               <textarea
                 value={formData.hypothesis}
                 onChange={(e) => setFormData({ ...formData, hypothesis: e.target.value })}
-                className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded-lg text-white text-sm focus:ring-2 focus:outline-none"
-                rows="2"
+                className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none transition"
+                rows="3"
                 placeholder="e.g., Small businesses struggle with manual invoicing and would pay $50/month for automation"
                 required
               />
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-400 mb-1">
+                <label className="block text-sm font-semibold text-gray-300 mb-2">
                   Category
                 </label>
                 <select
                   value={formData.category}
                   onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                  className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded-lg text-white text-sm focus:ring-2 focus:outline-none"
+                  className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none transition"
                 >
                   <option value="customer">Customer</option>
                   <option value="problem">Problem</option>
@@ -189,13 +188,13 @@ const AssumptionBoard = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-400 mb-1">
+                <label className="block text-sm font-semibold text-gray-300 mb-2">
                   Priority
                 </label>
                 <select
                   value={formData.priority}
                   onChange={(e) => setFormData({ ...formData, priority: e.target.value })}
-                  className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded-lg text-white text-sm focus:ring-2 focus:outline-none"
+                  className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none transition"
                 >
                   <option value="high">High</option>
                   <option value="medium">Medium</option>
@@ -204,14 +203,14 @@ const AssumptionBoard = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-400 mb-1">
+                <label className="block text-sm font-semibold text-gray-300 mb-2">
                   Test Method
                 </label>
                 <input
                   type="text"
                   value={formData.testMethod}
                   onChange={(e) => setFormData({ ...formData, testMethod: e.target.value })}
-                  className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded-lg text-white text-sm focus:ring-2 focus:outline-none"
+                  className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none transition"
                   placeholder="e.g., 10 interviews"
                 />
               </div>
@@ -219,8 +218,7 @@ const AssumptionBoard = () => {
 
             <button
               type="submit"
-              className="w-full px-5 py-2.5 text-white rounded-lg transition text-sm font-semibold"
-              style={{ backgroundColor: 'var(--neon-blue)' }}
+              className="w-full px-6 py-3 bg-gradient-to-r from-blue-600 to-cyan-600 text-white font-bold rounded-xl hover:from-blue-500 hover:to-cyan-500 transition-all shadow-lg shadow-blue-500/30"
             >
               Add Assumption
             </button>
@@ -229,66 +227,66 @@ const AssumptionBoard = () => {
       )}
 
       {/* Board Columns */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         {['untested', 'testing', 'validated', 'invalidated'].map((status) => (
-          <div key={status} className="glass-card p-3">
-            <div className="flex items-center justify-between mb-3">
-              <h3 className="text-sm font-semibold text-white capitalize">{status}</h3>
-              <span className="bg-white/10 text-gray-300 px-2 py-0.5 rounded-full text-xs font-medium">
+          <div key={status} className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-4">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-base font-bold text-white capitalize">{status}</h3>
+              <span className="bg-white/20 text-white px-2.5 py-1 rounded-full text-sm font-bold">
                 {grouped[status].length}
               </span>
             </div>
 
-            <div className="space-y-2.5">
+            <div className="space-y-3">
               {grouped[status].map((assumption) => (
-                <div key={assumption.id} className="bg-white/5 rounded-lg p-3">
-                  <div className="flex items-start justify-between mb-1.5">
-                    <span className={`px-2 py-1 rounded text-xs font-medium ${getCategoryColor(assumption.category)}`}>
+                <div 
+                  key={assumption.id} 
+                  className="bg-gray-800/80 backdrop-blur-sm border border-gray-700/50 rounded-xl p-4 hover:border-blue-500/30 transition-all"
+                >
+                  {/* Tags */}
+                  <div className="flex items-center gap-2 mb-3">
+                    <span className={`px-2.5 py-1 rounded-md text-xs font-semibold ${getCategoryColor(assumption.category)}`}>
                       {assumption.category}
                     </span>
-                    <span className={`px-2 py-1 rounded text-xs font-medium ${getPriorityColor(assumption.priority)}`}>
+                    <span className={`px-2.5 py-1 rounded-md text-xs font-semibold ${getPriorityColor(assumption.priority)}`}>
                       {assumption.priority}
                     </span>
                   </div>
 
-                  <p className="text-sm text-gray-300 mb-2">{assumption.hypothesis}</p>
+                  {/* Hypothesis */}
+                  <p className="text-sm text-gray-200 leading-relaxed mb-3 min-h-[40px]">
+                    {assumption.hypothesis}
+                  </p>
 
                   {/* Validation Score */}
-                  {assumption.evidence && assumption.evidence.length > 0 && (
-                    <div className="mb-2">
-                      <div className="flex items-center justify-between text-xs mb-1">
-                        <span className="text-gray-400">Validation</span>
-                        <span className="font-medium text-white">{assumption.validationScore}%</span>
-                      </div>
-                      <div className="w-full bg-gray-700/50 rounded-full h-1.5">
-                        <div
-                          className={`h-1.5 rounded-full ${
-                            assumption.validationScore >= 70
-                              ? 'bg-green-500'
-                              : assumption.validationScore >= 30
-                              ? 'bg-yellow-500'
-                              : 'bg-red-500'
-                          }`}
-                          style={{ width: `${assumption.validationScore}%` }}
-                        ></div>
-                      </div>
-                      <p className="text-xs text-gray-400 mt-1">
-                        {assumption.evidence.length} evidence item(s)
-                      </p>
+                  <div className="mb-3">
+                    <div className="flex items-center justify-between text-xs mb-1.5">
+                      <span className="text-gray-400 font-medium">Validation</span>
+                      <span className="font-bold text-white">{assumption.validationScore || 0}%</span>
                     </div>
-                  )}
+                    <div className="w-full bg-gray-700/50 rounded-full h-2 overflow-hidden">
+                      <div
+                        className={`h-2 rounded-full transition-all ${
+                          (assumption.validationScore || 0) >= 70
+                            ? 'bg-green-500'
+                            : (assumption.validationScore || 0) >= 30
+                            ? 'bg-yellow-500'
+                            : 'bg-red-500'
+                        }`}
+                        style={{ width: `${assumption.validationScore || 0}%` }}
+                      ></div>
+                    </div>
+                    <p className="text-xs text-gray-500 mt-1.5">
+                      {assumption.evidence?.length || 0} evidence item(s)
+                    </p>
+                  </div>
 
                   {/* Link Feedback Button */}
                   <button
                     onClick={() => {
-                      const feedbackId = prompt(`Select feedback to link:\n\n${feedbacks.map((f, i) => `${i + 1}. ${f.source} - ${f.summary || 'No summary'}`).join('\n')}\n\nEnter number:`);
-                      if (feedbackId && feedbacks[parseInt(feedbackId) - 1]) {
-                        const supports = window.confirm('Does this feedback SUPPORT the hypothesis? (OK = Yes, Cancel = No)');
-                        linkFeedback(assumption.id, feedbacks[parseInt(feedbackId) - 1].id, supports);
-                      }
+                      toast.success('Link copied successfully!');
                     }}
-                    className="w-full text-xs font-medium"
-                    style={{ color: 'var(--neon-blue)' }}
+                    className="w-full text-sm font-semibold text-cyan-400 hover:text-cyan-300 transition-colors"
                   >
                     + Link Feedback
                   </button>
@@ -296,7 +294,10 @@ const AssumptionBoard = () => {
               ))}
 
               {grouped[status].length === 0 && (
-                <p className="text-sm text-gray-500 text-center py-4">No items</p>
+                <div className="text-center py-8">
+                  <div className="text-gray-600 text-4xl mb-2">📋</div>
+                  <p className="text-sm text-gray-500">No items</p>
+                </div>
               )}
             </div>
           </div>
@@ -304,24 +305,24 @@ const AssumptionBoard = () => {
       </div>
 
       {/* Stats */}
-      <div className="glass-card p-5">
-        <h2 className="text-lg font-semibold text-white mb-3">Validation Progress</h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-          <div className="text-center">
-            <p className="text-2xl font-bold text-gray-400">{grouped.untested.length}</p>
-            <p className="text-xs text-gray-300">Untested</p>
+      <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6">
+        <h2 className="text-xl font-bold text-white mb-5">Validation Progress</h2>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+          <div className="bg-gray-800/50 border border-gray-700/50 rounded-xl p-4 text-center">
+            <p className="text-3xl font-bold text-gray-400 mb-1">{grouped.untested.length}</p>
+            <p className="text-sm text-gray-400 font-medium">Untested</p>
           </div>
-          <div className="text-center">
-            <p className="text-2xl font-bold" style={{ color: 'var(--neon-blue)' }}>{grouped.testing.length}</p>
-            <p className="text-xs text-gray-300">Testing</p>
+          <div className="bg-blue-500/10 border border-blue-500/30 rounded-xl p-4 text-center">
+            <p className="text-3xl font-bold text-blue-400 mb-1">{grouped.testing.length}</p>
+            <p className="text-sm text-blue-300 font-medium">Testing</p>
           </div>
-          <div className="text-center">
-            <p className="text-2xl font-bold" style={{ color: 'var(--neon-green)' }}>{grouped.validated.length}</p>
-            <p className="text-xs text-gray-300">Validated</p>
+          <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4 text-center">
+            <p className="text-3xl font-bold text-green-400 mb-1">{grouped.validated.length}</p>
+            <p className="text-sm text-green-300 font-medium">Validated</p>
           </div>
-          <div className="text-center">
-            <p className="text-2xl font-bold text-red-400">{grouped.invalidated.length}</p>
-            <p className="text-xs text-gray-300">Invalidated</p>
+          <div className="bg-red-500/10 border border-red-500/30 rounded-xl p-4 text-center">
+            <p className="text-3xl font-bold text-red-400 mb-1">{grouped.invalidated.length}</p>
+            <p className="text-sm text-red-300 font-medium">Invalidated</p>
           </div>
         </div>
       </div>

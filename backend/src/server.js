@@ -22,6 +22,7 @@ app.use('/api/auth', require('./routes/auth'));
 app.use('/api/tasks', require('./routes/tasks'));
 app.use('/api/milestones', require('./routes/milestones'));
 app.use('/api/feedback', require('./routes/feedback'));
+app.use('/api/feedback-forms', require('./routes/feedbackForms'));
 app.use('/api/startups', require('./routes/startups'));
 app.use('/api/analytics', require('./routes/analytics'));
 

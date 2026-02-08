@@ -8,7 +8,10 @@ router.get('/', authMiddleware, async (req, res) => {
   try {
     const startupId = req.user.startupId;
     
+    console.log('Fetching tasks for startupId:', startupId);
+    
     if (!startupId) {
+      console.log('No startup associated with user:', req.user.uid);
       return res.status(400).json({ error: 'No startup associated with this user' });
     }
     
@@ -21,6 +24,7 @@ router.get('/', authMiddleware, async (req, res) => {
       tasks.push({ id: doc.id, ...doc.data() });
     });
 
+    console.log('Found tasks:', tasks.length);
     res.json({ tasks });
   } catch (error) {
     console.error('Get tasks error:', error);

@@ -1,17 +1,18 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import colors from '../theme/colors';
 
 const RiskIndicator = ({ level = 'low' }) => {
   const getRiskColor = () => {
     switch (level.toLowerCase()) {
       case 'high':
-        return '#EF4444';
+        return colors.error;
       case 'medium':
-        return '#F59E0B';
+        return colors.warning;
       case 'low':
-        return '#10B981';
+        return colors.neonGreen;
       default:
-        return '#6B7280';
+        return colors.textMuted;
     }
   };
 

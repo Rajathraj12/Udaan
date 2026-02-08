@@ -84,7 +84,7 @@ function FounderDashboard({ userProfile, currentUser }) {
     if (!currentUser) return;
     try {
       const token = await currentUser.getIdToken();
-      const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/suggestions`, {
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/suggestions`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setSuggestions(response.data.suggestions || []);

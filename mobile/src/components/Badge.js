@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import colors from '../theme/colors';
 
 const Badge = ({ children, variant = 'default', style }) => {
   const getVariantStyle = () => {
@@ -34,22 +35,22 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 12,
     fontWeight: '600',
-    color: '#FFFFFF',
+    color: colors.textLight,
   },
   default: {
-    backgroundColor: '#6B7280',
+    backgroundColor: colors.textMuted,
   },
   success: {
-    backgroundColor: '#10B981',
+    backgroundColor: colors.neonGreen,
   },
   warning: {
-    backgroundColor: '#F59E0B',
+    backgroundColor: colors.warning,
   },
   danger: {
-    backgroundColor: '#EF4444',
+    backgroundColor: colors.error,
   },
   info: {
-    backgroundColor: '#3B82F6',
+    backgroundColor: colors.neonBlue,
   },
 });
 

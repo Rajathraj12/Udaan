@@ -14,6 +14,7 @@ import InvestorReadinessScreen from '../screens/InvestorReadinessScreen';
 import InsightsScreen from '../screens/InsightsScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import Loader from '../components/Loader';
+import colors from '../theme/colors';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -51,14 +52,31 @@ const FounderTabs = () => {
 
           return <Ionicons name={iconName} size={size} color={color} />;
         },
-        tabBarActiveTintColor: '#2563EB',
-        tabBarInactiveTintColor: '#6B7280',
-        headerStyle: {
-          backgroundColor: '#2563EB',
+        tabBarActiveTintColor: colors.neonBlue,
+        tabBarInactiveTintColor: colors.textGray,
+        tabBarStyle: {
+          backgroundColor: colors.bgCard,
+          borderTopColor: colors.borderLight,
+          borderTopWidth: 1,
+          paddingBottom: 5,
+          paddingTop: 5,
+          height: 60,
         },
-        headerTintColor: '#FFFFFF',
+        tabBarLabelStyle: {
+          fontSize: 10,
+          fontWeight: '600',
+        },
+        headerStyle: {
+          backgroundColor: colors.bgCard,
+          borderBottomColor: colors.borderLight,
+          borderBottomWidth: 1,
+          elevation: 0,
+          shadowOpacity: 0,
+        },
+        headerTintColor: colors.textLight,
         headerTitleStyle: {
           fontWeight: '600',
+          fontSize: 18,
         },
       })}
     >
@@ -67,15 +85,31 @@ const FounderTabs = () => {
         component={FounderHomeScreen}
         options={{ title: 'Dashboard' }}
       />
-      <Tab.Screen name="Tasks" component={TasksScreen} />
-      <Tab.Screen name="Milestones" component={MilestonesScreen} />
+      <Tab.Screen 
+        name="Tasks" 
+        component={TasksScreen}
+        options={{ title: 'Tasks' }}
+      />
+      <Tab.Screen 
+        name="Milestones" 
+        component={MilestonesScreen}
+        options={{ title: 'Milestones' }}
+      />
       <Tab.Screen 
         name="Readiness" 
         component={InvestorReadinessScreen}
-        options={{ title: 'Investor Readiness' }}
+        options={{ title: 'Readiness' }}
       />
-      <Tab.Screen name="Insights" component={InsightsScreen} />
-      <Tab.Screen name="Profile" component={ProfileScreen} />
+      <Tab.Screen 
+        name="Insights" 
+        component={InsightsScreen}
+        options={{ title: 'Insights' }}
+      />
+      <Tab.Screen 
+        name="Profile" 
+        component={ProfileScreen}
+        options={{ title: 'Profile' }}
+      />
     </Tab.Navigator>
   );
 };
@@ -104,14 +138,31 @@ const TeamMemberTabs = () => {
 
           return <Ionicons name={iconName} size={size} color={color} />;
         },
-        tabBarActiveTintColor: '#2563EB',
-        tabBarInactiveTintColor: '#6B7280',
-        headerStyle: {
-          backgroundColor: '#2563EB',
+        tabBarActiveTintColor: colors.neonBlue,
+        tabBarInactiveTintColor: colors.textGray,
+        tabBarStyle: {
+          backgroundColor: colors.bgCard,
+          borderTopColor: colors.borderLight,
+          borderTopWidth: 1,
+          paddingBottom: 5,
+          paddingTop: 5,
+          height: 60,
         },
-        headerTintColor: '#FFFFFF',
+        tabBarLabelStyle: {
+          fontSize: 10,
+          fontWeight: '600',
+        },
+        headerStyle: {
+          backgroundColor: colors.bgCard,
+          borderBottomColor: colors.borderLight,
+          borderBottomWidth: 1,
+          elevation: 0,
+          shadowOpacity: 0,
+        },
+        headerTintColor: colors.textLight,
         headerTitleStyle: {
           fontWeight: '600',
+          fontSize: 18,
         },
       })}
     >
@@ -133,8 +184,20 @@ const AppNavigator = () => {
     return <Loader />;
   }
 
+  const darkTheme = {
+    dark: true,
+    colors: {
+      primary: colors.neonBlue,
+      background: colors.bgDark,
+      card: colors.bgCard,
+      text: colors.textLight,
+      border: colors.borderLight,
+      notification: colors.neonBlue,
+    },
+  };
+
   return (
-    <NavigationContainer>
+    <NavigationContainer theme={darkTheme}>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         {user ? (
           user.role === 'founder' ? (

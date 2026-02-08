@@ -25,7 +25,7 @@ export default function Milestones() {
   const fetchMilestones = async () => {
     try {
       const token = await currentUser.getIdToken();
-      const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/milestones`, {
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/milestones`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setMilestones(response.data.milestones || []);
@@ -42,7 +42,7 @@ export default function Milestones() {
     try {
       const token = await currentUser.getIdToken();
       await axios.post(
-        `${process.env.REACT_APP_API_URL}/api/milestones`,
+        `${process.env.REACT_APP_API_URL}/milestones`,
         formData,
         { headers: { Authorization: `Bearer ${token}` } }
       );

@@ -14,6 +14,7 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { useAuth } from '../context/AuthContext';
 import Logo from '../components/Logo';
+import colors from '../theme/colors';
 
 const AuthScreen = () => {
   const { login, signup } = useAuth();
@@ -164,7 +165,7 @@ const AuthScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#111827',
+    backgroundColor: colors.bgDark,
   },
   scrollContent: {
     flexGrow: 1,
@@ -178,41 +179,43 @@ const styles = StyleSheet.create({
   appName: {
     fontSize: 32,
     fontWeight: 'bold',
-    color: '#F3F4F6',
+    color: colors.textLight,
     marginTop: 16,
   },
   tagline: {
     fontSize: 14,
-    color: '#9CA3AF',
+    color: colors.textGray,
     marginTop: 8,
    textAlign: 'center',
   },
   form: {
-    backgroundColor: '#1F2937',
+    backgroundColor: colors.bgCard,
     borderRadius: 16,
     padding: 24,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
-    elevation: 4,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.5,
+    shadowRadius: 10,
+    elevation: 8,
     borderWidth: 1,
-    borderColor: '#374151',
+    borderColor: colors.borderLight,
   },
   formTitle: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#F3F4F6',
+    color: colors.textLight,
     marginBottom: 24,
     textAlign: 'center',
   },
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#374151',
+    backgroundColor: 'rgba(255, 255, 255, 0.05)',
     borderRadius: 8,
     marginBottom: 16,
     paddingHorizontal: 12,
+    borderWidth: 1,
+    borderColor: colors.borderLight,
   },
   inputIcon: {
     marginRight: 8,
@@ -221,20 +224,25 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingVertical: 12,
     fontSize: 16,
-    color: '#F3F4F6',
+    color: colors.textLight,
   },
   button: {
-    backgroundColor: '#3B82F6',
+    backgroundColor: colors.primaryBlue,
     borderRadius: 8,
     paddingVertical: 14,
     alignItems: 'center',
     marginTop: 8,
+    shadowColor: colors.primaryBlue,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 4,
   },
   buttonDisabled: {
     backgroundColor: '#1E3A8A',
   },
   buttonText: {
-    color: '#FFFFFF',
+    color: colors.textLight,
     fontSize: 16,
     fontWeight: '600',
   },
@@ -244,29 +252,29 @@ const styles = StyleSheet.create({
   },
   toggleText: {
     fontSize: 14,
-    color: '#9CA3AF',
+    color: colors.textGray,
   },
   toggleLink: {
-    color: '#60A5FA',
+    color: colors.neonBlue,
     fontWeight: '600',
   },
   demoContainer: {
     marginTop: 24,
     padding: 12,
-    backgroundColor: '#1F2937',
+    backgroundColor: 'rgba(37, 99, 235, 0.1)',
     borderRadius: 8,
     borderLeftWidth: 3,
-    borderLeftColor: '#60A5FA',
+    borderLeftColor: colors.neonBlue,
   },
   demoTitle: {
     fontSize: 12,
     fontWeight: '600',
-    color: '#60A5FA',
+    color: colors.neonBlue,
     marginBottom: 4,
   },
   demoText: {
     fontSize: 12,
-    color: '#93C5FD',
+    color: colors.textLight,
   },
 });
 

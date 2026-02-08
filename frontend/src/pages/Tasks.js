@@ -42,10 +42,13 @@ export default function Tasks() {
         headers: { Authorization: `Bearer ${token}` },
       });
       
+      // Backend returns { tasks: [] }, extract the tasks array
+      const tasksData = response.data?.tasks || response.data || [];
+      
       // Filter tasks for team members
-      let filteredTasks = response.data;
+      let filteredTasks = tasksData;
       if (!isFounder) {
-        filteredTasks = response.data.filter(task => 
+        filteredTasks = tasksData.filter(task => 
           task.assignedTo === currentUser.uid || 
           task.assignedToEmail === currentUser.email
         );
@@ -193,8 +196,10 @@ export default function Tasks() {
       console.error('Error fetching team members:', error);
       // Mock data if API fails
       setTeamMembers([
-        { uid: '1', displayName: 'Alex Chen', email: 'team@startup.com' },
-        { uid: '2', displayName: 'Jordan Smith', email: 'developer@startup.com' },
+        { uid: '1', displayName: 'Alex Chen (Co-Founder)', email: 'alex@startup.com' },
+        { uid: '2', displayName: 'Jordan Smith (Developer)', email: 'jordan@startup.com' },
+        { uid: '3', displayName: 'Priya Sharma (Designer)', email: 'priya@startup.com' },
+        { uid: '4', displayName: 'Sam Wilson (Marketing)', email: 'sam@startup.com' },
       ]);
     }
   };
@@ -310,15 +315,15 @@ export default function Tasks() {
 
         {/* Search Bar */}
         <div className="relative">
-          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-            <MagnifyingGlassIcon className="h-5 w-5 text-gray-500" />
+          <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+            <MagnifyingGlassIcon className="h-5 w-5 text-gray-400" />
           </div>
           <input
             type="text"
             placeholder="Search tasks..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="block w-full pl-10 pr-3 py-2 bg-white/5 border border-white/10 text-white rounded-lg focus:ring-blue-500 focus:border-blue-500"
+            className="block w-full pl-12 pr-4 py-3 bg-gray-800 border border-white/20 text-white rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none transition hover:bg-gray-700"
           />
         </div>
 
@@ -359,11 +364,12 @@ export default function Tasks() {
                       <select
                         value={task.status}
                         onChange={(e) => updateTaskStatus(task.id, e.target.value)}
-                        className={`w-full px-3 py-2 rounded-lg text-sm font-medium ${getStatusColor(task.status)} border-0 focus:ring-2 focus:ring-blue-500`}
+                        className={`w-full px-3 py-2 rounded-lg text-sm font-medium ${getStatusColor(task.status)} border border-white/20 focus:ring-2 focus:ring-blue-500 focus:outline-none transition cursor-pointer`}
+                        style={{ backgroundImage: "url(\"data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%239CA3AF' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e\")", backgroundPosition: "right 0.5rem center", backgroundRepeat: "no-repeat", backgroundSize: "1.5em 1.5em", paddingRight: "2.5rem" }}
                       >
-                        <option value="todo">To Do</option>
-                        <option value="in_progress">In Progress</option>
-                        <option value="completed">Completed</option>
+                        <option value="todo" className="bg-gray-800 text-white">To Do</option>
+                        <option value="in_progress" className="bg-gray-800 text-white">In Progress</option>
+                        <option value="completed" className="bg-gray-800 text-white">Completed</option>
                       </select>
                     </div>
                   </div>
@@ -389,7 +395,7 @@ export default function Tasks() {
                   required
                   value={newTask.title}
                   onChange={(e) => setNewTask({ ...newTask, title: e.target.value })}
-                  className="w-full px-3 py-2 bg-white/5 border border-white/10 text-white rounded-lg focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-4 py-3 bg-gray-800 border border-white/20 rounded-xl text-white text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none transition hover:bg-gray-700"
                   placeholder="Enter task title"
                 />
               </div>
@@ -401,7 +407,7 @@ export default function Tasks() {
                 <textarea
                   value={newTask.description}
                   onChange={(e) => setNewTask({ ...newTask, description: e.target.value })}
-                  className="w-full px-3 py-2 bg-white/5 border border-white/10 text-white rounded-lg focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-4 py-3 bg-gray-800 border border-white/20 rounded-xl text-white text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none transition hover:bg-gray-700"
                   rows="3"
                   placeholder="Enter task description"
                 />
@@ -415,11 +421,12 @@ export default function Tasks() {
                   <select
                     value={newTask.priority}
                     onChange={(e) => setNewTask({ ...newTask, priority: e.target.value })}
-                    className="w-full px-3 py-2 bg-white/5 border border-white/10 text-white rounded-lg focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-3 bg-gray-800 border border-white/20 rounded-xl text-white text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none transition cursor-pointer hover:bg-gray-700"
+                    style={{ backgroundImage: "url(\"data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%239CA3AF' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e\")", backgroundPosition: "right 0.5rem center", backgroundRepeat: "no-repeat", backgroundSize: "1.5em 1.5em", paddingRight: "2.5rem" }}
                   >
-                    <option value="low">Low</option>
-                    <option value="medium">Medium</option>
-                    <option value="high">High</option>
+                    <option value="low" className="bg-gray-800 text-white">Low</option>
+                    <option value="medium" className="bg-gray-800 text-white">Medium</option>
+                    <option value="high" className="bg-gray-800 text-white">High</option>
                   </select>
                 </div>
 
@@ -431,7 +438,7 @@ export default function Tasks() {
                     type="date"
                     value={newTask.dueDate}
                     onChange={(e) => setNewTask({ ...newTask, dueDate: e.target.value })}
-                    className="w-full px-3 py-2 bg-white/5 border border-white/10 text-white rounded-lg focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-3 bg-gray-800 border border-white/20 rounded-xl text-white text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none transition cursor-pointer hover:bg-gray-700"
                   />
                 </div>
               </div>
@@ -444,11 +451,12 @@ export default function Tasks() {
                 <select
                   value={newTask.assignedTo}
                   onChange={(e) => setNewTask({ ...newTask, assignedTo: e.target.value })}
-                  className="w-full px-3 py-2 bg-white/5 border border-white/10 text-white rounded-lg focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-4 py-3 bg-gray-800 border border-white/20 rounded-xl text-white text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none transition cursor-pointer hover:bg-gray-700"
+                  style={{ backgroundImage: "url(\"data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%239CA3AF' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e\")", backgroundPosition: "right 0.5rem center", backgroundRepeat: "no-repeat", backgroundSize: "1.5em 1.5em", paddingRight: "2.5rem" }}
                 >
-                  <option value="">Unassigned</option>
+                  <option value="" className="bg-gray-800 text-white">Unassigned</option>
                   {teamMembers.map((member) => (
-                    <option key={member.uid} value={member.uid}>
+                    <option key={member.uid} value={member.uid} className="bg-gray-800 text-white">
                       {member.displayName || member.email}
                     </option>
                   ))}

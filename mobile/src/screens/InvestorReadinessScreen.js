@@ -10,6 +10,7 @@ import { Ionicons } from '@expo/vector-icons';
 import Card from '../components/Card';
 import Loader from '../components/Loader';
 import { investorReadinessAPI } from '../services/api';
+import colors from '../theme/colors';
 
 const InvestorReadinessScreen = () => {
   const [loading, setLoading] = useState(true);
@@ -104,7 +105,7 @@ const InvestorReadinessScreen = () => {
                     <Ionicons
                       name={stage.icon}
                       size={24}
-                      color={isLocked ? '#9CA3AF' : '#FFFFFF'}
+                      color={isLocked ? colors.textMuted : colors.textLight}
                     />
                   </View>
                   <View style={styles.stageInfo}>
@@ -139,22 +140,24 @@ const InvestorReadinessScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F9FAFB',
+    backgroundColor: colors.bgDark,
     padding: 16,
   },
   headerCard: {
-    backgroundColor: '#2563EB',
+    backgroundColor: 'rgba(37, 99, 235, 0.2)',
+    borderWidth: 1,
+    borderColor: colors.primaryBlue,
     marginBottom: 24,
   },
   headerTitle: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#FFFFFF',
+    color: colors.textLight,
     marginBottom: 8,
   },
   headerSubtitle: {
     fontSize: 14,
-    color: '#DBEAFE',
+    color: colors.neonBlue,
   },
   timeline: {
     paddingBottom: 24,
@@ -169,21 +172,21 @@ const styles = StyleSheet.create({
     top: -16,
     width: 2,
     height: 16,
-    backgroundColor: '#E5E7EB',
+    backgroundColor: colors.borderLight,
   },
   timelineLineCompleted: {
-    backgroundColor: '#10B981',
+    backgroundColor: colors.neonGreen,
   },
   stageCard: {
     marginBottom: 0,
   },
   stageCardCurrent: {
     borderLeftWidth: 4,
-    borderLeftColor: '#2563EB',
-    backgroundColor: '#EFF6FF',
+    borderLeftColor: colors.primaryBlue,
+    backgroundColor: 'rgba(37, 99, 235, 0.1)',
   },
   stageCardLocked: {
-    opacity: 0.6,
+    opacity: 0.5,
   },
   stageHeader: {
     flexDirection: 'row',
@@ -193,19 +196,19 @@ const styles = StyleSheet.create({
     width: 48,
     height: 48,
     borderRadius: 24,
-    backgroundColor: '#6B7280',
+    backgroundColor: colors.textMuted,
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 12,
   },
   stageIconCompleted: {
-    backgroundColor: '#10B981',
+    backgroundColor: colors.neonGreen,
   },
   stageIconCurrent: {
-    backgroundColor: '#2563EB',
+    backgroundColor: colors.primaryBlue,
   },
   stageIconLocked: {
-    backgroundColor: '#E5E7EB',
+    backgroundColor: 'rgba(255, 255, 255, 0.05)',
   },
   stageInfo: {
     flex: 1,
@@ -213,25 +216,25 @@ const styles = StyleSheet.create({
   stageName: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#111827',
+    color: colors.textLight,
     marginBottom: 4,
   },
   stageNameLocked: {
-    color: '#9CA3AF',
+    color: colors.textGray,
   },
   stageStatus: {
     fontSize: 12,
-    color: '#10B981',
+    color: colors.neonGreen,
     fontWeight: '500',
   },
   stageStatusCurrent: {
     fontSize: 12,
-    color: '#2563EB',
+    color: colors.neonBlue,
     fontWeight: '500',
   },
   stageStatusLocked: {
     fontSize: 12,
-    color: '#9CA3AF',
+    color: colors.textGray,
   },
 });
 

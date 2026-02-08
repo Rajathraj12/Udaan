@@ -25,14 +25,36 @@ const AssumptionBoard = () => {
     try {
       const token = await currentUser.getIdToken();
       const [assumptionsRes, feedbackRes] = await Promise.all([
-        axios.get(`${process.env.REACT_APP_API_URL}/api/assumptions`, {
+        axios.get(`${process.env.REACT_APP_API_URL}/assumptions`, {
           headers: { Authorization: `Bearer ${token}` },
         }),
-        axios.get(`${process.env.REACT_APP_API_URL}/api/feedback`, {
+        axios.get(`${process.env.REACT_APP_API_URL}/feedback`, {
           headers: { Authorization: `Bearer ${token}` },
         }),
       ]);
-      setAssumptions(assumptionsRes.data);
+      
+      console.log('Raw assumptions from API:', assumptionsRes.data.length);
+      
+      // Deduplicate assumptions by ID and hypothesis (to catch different IDs with same content)
+      const uniqueAssumptions = Array.isArray(assumptionsRes.data) 
+        ? assumptionsRes.data.reduce((acc, current) => {
+            // Check if already exists by ID or by hypothesis
+            const existsByIdOrContent = acc.find(item => 
+              item.id === current.id || 
+              (item.hypothesis === current.hypothesis && 
+               item.category === current.category && 
+               item.priority === current.priority)
+            );
+            if (!existsByIdOrContent) {
+              acc.push(current);
+            }
+            return acc;
+          }, [])
+        : [];
+      
+      console.log('Unique assumptions after deduplication:', uniqueAssumptions.length);
+      
+      setAssumptions(uniqueAssumptions);
       setFeedbacks(feedbackRes.data);
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -47,7 +69,7 @@ const AssumptionBoard = () => {
     try {
       const token = await currentUser.getIdToken();
       await axios.post(
-        `${process.env.REACT_APP_API_URL}/api/assumptions`,
+        `${process.env.REACT_APP_API_URL}/assumptions`,
         formData,
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -71,7 +93,7 @@ const AssumptionBoard = () => {
     try {
       const token = await currentUser.getIdToken();
       await axios.post(
-        `${process.env.REACT_APP_API_URL}/api/assumptions/${assumptionId}/link-feedback`,
+        `${process.env.REACT_APP_API_URL}/assumptions/${assumptionId}/link-feedback`,
         { feedbackId, supportsHypothesis },
         { headers: { Authorization: `Bearer ${token}` } }
       );

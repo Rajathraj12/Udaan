@@ -12,6 +12,7 @@ import ProgressBar from '../components/ProgressBar';
 import Loader from '../components/Loader';
 import EmptyState from '../components/EmptyState';
 import { milestonesAPI } from '../services/api';
+import colors from '../theme/colors';
 
 const MilestonesScreen = () => {
   const [loading, setLoading] = useState(true);
@@ -46,9 +47,9 @@ const MilestonesScreen = () => {
   };
 
   const getProgressColor = (status) => {
-    if (status === 'On Track') return '#10B981';
-    if (status === 'At Risk') return '#EF4444';
-    return '#6B7280';
+    if (status === 'On Track') return colors.neonGreen;
+    if (status === 'At Risk') return colors.error;
+    return colors.textMuted;
   };
 
   if (loading) {
@@ -108,7 +109,7 @@ const MilestonesScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#111827',
+    backgroundColor: colors.bgDark,
     padding: 16,
   },
   milestoneCard: {
@@ -124,12 +125,12 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 18,
     fontWeight: '600',
-    color: '#F3F4F6',
+    color: colors.textLight,
     marginRight: 8,
   },
   milestoneDescription: {
     fontSize: 14,
-    color: '#9CA3AF',
+    color: colors.textGray,
     marginBottom: 16,
     lineHeight: 20,
   },
@@ -144,16 +145,16 @@ const styles = StyleSheet.create({
   progressLabel: {
     fontSize: 14,
     fontWeight: '500',
-    color: '#D1D5DB',
+    color: colors.textGray,
   },
   progressPercentage: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#60A5FA',
+    color: colors.neonBlue,
   },
   dueDate: {
     fontSize: 12,
-    color: '#9CA3AF',
+    color: colors.textGray,
   },
 });
 

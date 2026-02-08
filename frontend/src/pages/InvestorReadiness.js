@@ -16,7 +16,7 @@ const InvestorReadiness = () => {
   const fetchReadinessStatus = async () => {
     try {
       const token = await currentUser.getIdToken();
-      const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/investor-readiness`, {
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/investor-readiness`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setReadinessData(response.data);
@@ -32,7 +32,7 @@ const InvestorReadiness = () => {
     try {
       const token = await currentUser.getIdToken();
       await axios.post(
-        `${process.env.REACT_APP_API_URL}/api/investor-readiness/manual-check`,
+        `${process.env.REACT_APP_API_URL}/investor-readiness/manual-check`,
         { criterionId, completed: !currentValue },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -48,7 +48,7 @@ const InvestorReadiness = () => {
     try {
       const token = await currentUser.getIdToken();
       await axios.post(
-        `${process.env.REACT_APP_API_URL}/api/investor-readiness/advance-stage`,
+        `${process.env.REACT_APP_API_URL}/investor-readiness/advance-stage`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );

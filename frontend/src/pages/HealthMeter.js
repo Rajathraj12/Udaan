@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { useAuth } from '../contexts/AuthContext';
 import Layout from '../components/Layout';
@@ -8,19 +8,11 @@ const HealthMeter = () => {
   const [healthData, setHealthData] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    if (currentUser) {
-      fetchHealthScore();
-    } else {
-      setLoading(false);
-    }
-  }, [currentUser]);
-
-  const fetchHealthScore = async () => {
+  const fetchHealthScore = useCallback(async () => {
     if (!currentUser) return;
     try {
       const token = await currentUser.getIdToken();
-      const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/health`, {
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/health`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setHealthData(response.data);
@@ -29,7 +21,15 @@ const HealthMeter = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [currentUser]);
+
+  useEffect(() => {
+    if (currentUser) {
+      fetchHealthScore();
+    } else {
+      setLoading(false);
+    }
+  }, [currentUser, fetchHealthScore]);
 
   if (loading) {
     return (
@@ -53,8 +53,8 @@ const HealthMeter = () => {
 
   const { healthScore, riskLevel, riskColor, topRisks, metrics, recommendations } = healthData;
 
-  // Calculate circle progress for gauge (radius = 70)
-  const circumference = 2 * Math.PI * 70;
+  // Calculate circle progress for gauge (radius = 44 in viewBox coordinates)
+  const circumference = 2 * Math.PI * 44;
   const progress = circumference - (healthScore / 100) * circumference;
 
   return (
@@ -74,24 +74,24 @@ const HealthMeter = () => {
       <div className="glass-card p-6">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           {/* Circular Gauge */}
-          <div className="relative flex-shrink-0">
-            <svg className="w-40 h-40 md:w-48 md:h-48 transform -rotate-90">
+          <div className="relative flex-shrink-0 w-40 h-40 md:w-48 md:h-48">
+            <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
               {/* Background circle */}
               <circle
-                cx="80"
-                cy="80"
-                r="70"
+                cx="50"
+                cy="50"
+                r="44"
                 stroke="rgba(255, 255, 255, 0.1)"
-                strokeWidth="14"
+                strokeWidth="8"
                 fill="none"
               />
               {/* Progress circle */}
               <circle
-                cx="80"
-                cy="80"
-                r="70"
+                cx="50"
+                cy="50"
+                r="44"
                 stroke={riskColor}
-                strokeWidth="14"
+                strokeWidth="8"
                 fill="none"
                 strokeDasharray={circumference}
                 strokeDashoffset={progress}

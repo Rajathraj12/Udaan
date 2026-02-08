@@ -1,7 +1,8 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import colors from '../theme/colors';
 
-const ProgressBar = ({ progress = 0, color = '#2563EB', height = 8, showPercentage = false }) => {
+const ProgressBar = ({ progress = 0, color = colors.primaryBlue, height = 8, showPercentage = false }) => {
   const percentage = Math.min(Math.max(progress, 0), 100);
 
   return (
@@ -28,7 +29,7 @@ const ProgressBar = ({ progress = 0, color = '#2563EB', height = 8, showPercenta
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    backgroundColor: '#E5E7EB',
+    backgroundColor: 'rgba(255, 255, 255, 0.05)',
     borderRadius: 4,
     overflow: 'hidden',
   },
@@ -37,7 +38,7 @@ const styles = StyleSheet.create({
   },
   percentage: {
     fontSize: 12,
-    color: '#6B7280',
+    color: colors.textGray,
     marginTop: 4,
     textAlign: 'right',
   },

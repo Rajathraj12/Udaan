@@ -29,7 +29,20 @@ router.get('/', authMiddleware, async (req, res) => {
         return dateB - dateA;
       });
 
-    res.json(assumptions);
+    // Deduplicate based on content (hypothesis + category + priority)
+    const uniqueAssumptions = assumptions.reduce((acc, current) => {
+      const isDuplicate = acc.find(item => 
+        item.hypothesis === current.hypothesis &&
+        item.category === current.category &&
+        item.priority === current.priority
+      );
+      if (!isDuplicate) {
+        acc.push(current);
+      }
+      return acc;
+    }, []);
+
+    res.json(uniqueAssumptions);
 
   } catch (error) {
     console.error('Error fetching assumptions:', error);

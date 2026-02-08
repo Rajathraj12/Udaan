@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { useAuth } from '../contexts/AuthContext';
 import Layout from '../components/Layout';
@@ -34,45 +34,45 @@ export default function Budget() {
     phase: 'Validation',
   });
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     try {
       const token = await currentUser.getIdToken();
       const [budgetRes, expensesRes, milestonesRes, assumptionsRes] = await Promise.all([
-        axios.get(`${process.env.REACT_APP_API_URL}/api/budget`, {
+        axios.get(`${process.env.REACT_APP_API_URL}/budget`, {
           headers: { Authorization: `Bearer ${token}` },
         }).catch(() => ({ data: null })),
-        axios.get(`${process.env.REACT_APP_API_URL}/api/budget/expenses`, {
+        axios.get(`${process.env.REACT_APP_API_URL}/budget/expenses`, {
           headers: { Authorization: `Bearer ${token}` },
         }).catch(() => ({ data: [] })),
-        axios.get(`${process.env.REACT_APP_API_URL}/api/milestones`, {
+        axios.get(`${process.env.REACT_APP_API_URL}/milestones`, {
           headers: { Authorization: `Bearer ${token}` },
         }).catch(() => ({ data: [] })),
-        axios.get(`${process.env.REACT_APP_API_URL}/api/assumptions`, {
+        axios.get(`${process.env.REACT_APP_API_URL}/assumptions`, {
           headers: { Authorization: `Bearer ${token}` },
         }).catch(() => ({ data: [] })),
       ]);
 
       setBudgetData(budgetRes.data);
-      setExpenses(expensesRes.data);
-      setMilestones(milestonesRes.data);
-      setAssumptions(assumptionsRes.data);
+      setExpenses(Array.isArray(expensesRes.data) ? expensesRes.data : []);
+      setMilestones(Array.isArray(milestonesRes.data) ? milestonesRes.data : []);
+      setAssumptions(Array.isArray(assumptionsRes.data) ? assumptionsRes.data : []);
     } catch (error) {
       console.error('Error fetching data:', error);
     } finally {
       setLoading(false);
     }
-  };
+  }, [currentUser]);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
 
   const handleBudgetSetup = async (e) => {
     e.preventDefault();
     try {
       const token = await currentUser.getIdToken();
       await axios.post(
-        `${process.env.REACT_APP_API_URL}/api/budget`,
+        `${process.env.REACT_APP_API_URL}/budget`,
         budgetForm,
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -90,7 +90,7 @@ export default function Budget() {
     try {
       const token = await currentUser.getIdToken();
       await axios.post(
-        `${process.env.REACT_APP_API_URL}/api/budget/expenses`,
+        `${process.env.REACT_APP_API_URL}/budget/expenses`,
         expenseForm,
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -109,17 +109,20 @@ export default function Budget() {
     if (!budgetData) return null;
 
     const totalBudget = parseFloat(budgetData.totalBudget) || 0;
-    const totalSpent = expenses.reduce((sum, exp) => sum + parseFloat(exp.amount || 0), 0);
+    const expensesArray = Array.isArray(expenses) ? expenses : [];
+    const totalSpent = expensesArray.reduce((sum, exp) => sum + parseFloat(exp.amount || 0), 0);
     const budgetUsedPercent = totalBudget > 0 ? (totalSpent / totalBudget) * 100 : 0;
 
-    // Milestone completion
-    const completedMilestones = milestones.filter(m => m.status === 'completed').length;
-    const totalMilestones = milestones.length;
+    // Milestone completion - ensure milestones is an array
+    const milestonesArray = Array.isArray(milestones) ? milestones : [];
+    const completedMilestones = milestonesArray.filter(m => m.status === 'completed').length;
+    const totalMilestones = milestonesArray.length;
     const milestoneProgress = totalMilestones > 0 ? (completedMilestones / totalMilestones) * 100 : 0;
 
-    // Validation progress
-    const validatedAssumptions = assumptions.filter(a => a.status === 'validated').length;
-    const totalAssumptions = assumptions.length;
+    // Validation progress - ensure assumptions is an array
+    const assumptionsArray = Array.isArray(assumptions) ? assumptions : [];
+    const validatedAssumptions = assumptionsArray.filter(a => a.status === 'validated').length;
+    const totalAssumptions = assumptionsArray.length;
     const validationProgress = totalAssumptions > 0 ? (validatedAssumptions / totalAssumptions) * 100 : 0;
 
     // Budget confidence
@@ -195,8 +198,9 @@ export default function Budget() {
     );
   }
 
-  const metrics = calculateMetrics();
-  const warnings = getWarnings();
+  // Calculate metrics and warnings only after loading is complete
+  const metrics = budgetData ? calculateMetrics() : null;
+  const warnings = budgetData ? getWarnings() : [];
 
   return (
     <Layout>

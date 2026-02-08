@@ -13,6 +13,7 @@ import Badge from '../components/Badge';
 import Loader from '../components/Loader';
 import EmptyState from '../components/EmptyState';
 import { tasksAPI } from '../services/api';
+import colors from '../theme/colors';
 
 const TasksScreen = () => {
   const [loading, setLoading] = useState(true);
@@ -127,7 +128,7 @@ const TasksScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#111827',
+    backgroundColor: colors.bgDark,
     padding: 16,
   },
   taskCard: {
@@ -143,12 +144,12 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 16,
     fontWeight: '600',
-    color: '#F3F4F6',
+    color: colors.textLight,
     marginRight: 8,
   },
   taskDescription: {
     fontSize: 14,
-    color: '#9CA3AF',
+    color: colors.textGray,
     marginBottom: 12,
   },
   taskMeta: {
@@ -159,19 +160,19 @@ const styles = StyleSheet.create({
   },
   dueDate: {
     fontSize: 12,
-    color: '#9CA3AF',
+    color: colors.textGray,
   },
   milestoneBadge: {
     fontSize: 10,
   },
   updateButton: {
-    backgroundColor: '#3B82F6',
+    backgroundColor: colors.primaryBlue,
     borderRadius: 6,
     paddingVertical: 8,
     alignItems: 'center',
   },
   updateButtonText: {
-    color: '#FFFFFF',
+    color: colors.textLight,
     fontSize: 14,
     fontWeight: '600',
   },

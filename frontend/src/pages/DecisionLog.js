@@ -27,7 +27,7 @@ const DecisionLog = () => {
   const fetchDecisions = async () => {
     try {
       const token = await currentUser.getIdToken();
-      const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/decisions`, {
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/decisions`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setDecisions(response.data);
@@ -46,7 +46,7 @@ const DecisionLog = () => {
       const optionsArray = formData.options.split('\n').filter(o => o.trim());
       
       await axios.post(
-        `${process.env.REACT_APP_API_URL}/api/decisions`,
+        `${process.env.REACT_APP_API_URL}/decisions`,
         {
           ...formData,
           options: optionsArray,
@@ -77,7 +77,7 @@ const DecisionLog = () => {
     try {
       const token = await currentUser.getIdToken();
       await axios.put(
-        `${process.env.REACT_APP_API_URL}/api/decisions/${id}`,
+        `${process.env.REACT_APP_API_URL}/decisions/${id}`,
         { actualOutcome, status },
         { headers: { Authorization: `Bearer ${token}` } }
       );

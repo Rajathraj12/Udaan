@@ -11,6 +11,7 @@ import { Ionicons } from '@expo/vector-icons';
 import Card from '../components/Card';
 import Badge from '../components/Badge';
 import { useAuth } from '../context/AuthContext';
+import colors from '../theme/colors';
 
 const ProfileScreen = () => {
   const { user, logout } = useAuth();
@@ -143,7 +144,7 @@ const ProfileScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#111827',
+    backgroundColor: colors.bgDark,
     padding: 16,
   },
   profileCard: {
@@ -158,7 +159,7 @@ const styles = StyleSheet.create({
     width: 96,
     height: 96,
     borderRadius: 48,
-    backgroundColor: '#3B82F6',
+    backgroundColor: colors.primaryBlue,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -169,7 +170,7 @@ const styles = StyleSheet.create({
   email: {
     fontSize: 18,
     fontWeight: '600',
-    color: '#F3F4F6',
+    color: colors.textLight,
     marginBottom: 8,
   },
   roleBadge: {
@@ -180,12 +181,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 16,
     paddingVertical: 8,
-    backgroundColor: '#374151',
+    backgroundColor: 'rgba(255, 255, 255, 0.05)',
     borderRadius: 8,
   },
   startupName: {
     fontSize: 14,
-    color: '#D1D5DB',
+    color: colors.textGray,
     marginLeft: 8,
   },
   section: {
@@ -194,7 +195,7 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#9CA3AF',
+    color: colors.textGray,
     textTransform: 'uppercase',
     marginBottom: 12,
     paddingHorizontal: 4,
@@ -214,34 +215,34 @@ const styles = StyleSheet.create({
   },
   menuText: {
     fontSize: 16,
-    color: '#E5E7EB',
+    color: colors.textLight,
     marginLeft: 12,
   },
   divider: {
     height: 1,
-    backgroundColor: '#374151',
+    backgroundColor: colors.borderLight,
     marginHorizontal: 16,
   },
   logoutButton: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#1F2937',
+    backgroundColor: colors.bgCard,
     borderRadius: 8,
     paddingVertical: 14,
     marginBottom: 16,
     borderWidth: 1,
-    borderColor: '#EF4444',
+    borderColor: colors.error,
   },
   logoutText: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#EF4444',
+    color: colors.error,
     marginLeft: 8,
   },
   version: {
     fontSize: 12,
-    color: '#6B7280',
+    color: colors.textMuted,
     textAlign: 'center',
     marginBottom: 24,
   },

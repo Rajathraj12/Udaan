@@ -97,4 +97,35 @@ router.put('/:id', authMiddleware, async (req, res) => {
   }
 });
 
+// Get team members for a startup
+router.get('/:id/team', authMiddleware, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { startupId } = req.user;
+
+    console.log('Fetching team for startup:', id, 'User startupId:', startupId);
+
+    // Verify user has access to this startup
+    if (startupId !== id) {
+      console.log('Unauthorized: User startupId does not match requested id');
+      return res.status(403).json({ error: 'Unauthorized access to startup team' });
+    }
+
+    const usersSnapshot = await db.collection('users')
+      .where('startupId', '==', id)
+      .get();
+
+    const teamMembers = usersSnapshot.docs.map(doc => ({
+      uid: doc.id,
+      ...doc.data(),
+    }));
+
+    console.log('Found team members:', teamMembers.length);
+    res.json(teamMembers);
+  } catch (error) {
+    console.error('Get team members error:', error);
+    res.status(500).json({ error: 'Failed to fetch team members' });
+  }
+});
+
 module.exports = router;

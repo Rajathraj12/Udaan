@@ -177,13 +177,14 @@ const AssumptionBoard = () => {
                 <select
                   value={formData.category}
                   onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                  className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none transition"
+                  className="w-full px-4 py-3 bg-gray-800 border border-white/20 rounded-xl text-white text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none transition cursor-pointer hover:bg-gray-700"
+                  style={{ backgroundImage: "url(\"data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%239CA3AF' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e\")", backgroundPosition: "right 0.5rem center", backgroundRepeat: "no-repeat", backgroundSize: "1.5em 1.5em", paddingRight: "2.5rem" }}
                 >
-                  <option value="customer">Customer</option>
-                  <option value="problem">Problem</option>
-                  <option value="solution">Solution</option>
-                  <option value="market">Market</option>
-                  <option value="business model">Business Model</option>
+                  <option value="customer" className="bg-gray-800 text-white">Customer</option>
+                  <option value="problem" className="bg-gray-800 text-white">Problem</option>
+                  <option value="solution" className="bg-gray-800 text-white">Solution</option>
+                  <option value="market" className="bg-gray-800 text-white">Market</option>
+                  <option value="business model" className="bg-gray-800 text-white">Business Model</option>
                 </select>
               </div>
 
@@ -194,11 +195,12 @@ const AssumptionBoard = () => {
                 <select
                   value={formData.priority}
                   onChange={(e) => setFormData({ ...formData, priority: e.target.value })}
-                  className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none transition"
+                  className="w-full px-4 py-3 bg-gray-800 border border-white/20 rounded-xl text-white text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none transition cursor-pointer hover:bg-gray-700"
+                  style={{ backgroundImage: "url(\"data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%239CA3AF' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e\")", backgroundPosition: "right 0.5rem center", backgroundRepeat: "no-repeat", backgroundSize: "1.5em 1.5em", paddingRight: "2.5rem" }}
                 >
-                  <option value="high">High</option>
-                  <option value="medium">Medium</option>
-                  <option value="low">Low</option>
+                  <option value="high" className="bg-gray-800 text-white">High</option>
+                  <option value="medium" className="bg-gray-800 text-white">Medium</option>
+                  <option value="low" className="bg-gray-800 text-white">Low</option>
                 </select>
               </div>
 

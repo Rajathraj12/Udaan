@@ -162,10 +162,12 @@ const styles = `
     justify-content: space-between;
     min-height: 90vh;
     padding: 100px 5% 50px;
+    gap: 40px;
   }
 
   .hero-content {
     max-width: 550px;
+    margin-left: auto;
   }
 
   .hero-buttons {
@@ -176,8 +178,9 @@ const styles = `
 
   .hero-visual {
     position: relative;
-    max-width: 600px;
-    margin-left: auto;
+    max-width: 1200px;
+    margin-right: auto;
+    order: -1;
   }
 
   .glowing-image {
@@ -316,7 +319,7 @@ const Navbar = () => {
 
 const HeroSection = () => {
   // Placeholder for the complex visualization. Replace with your actual asset.
-  const visualizationPlaceholder = "https://via.placeholder.com/600x400/0a0a16/22d3ee?text=Futuristic+UI+Visualization+Asset";
+  const visualizationPlaceholder = "/image.png";
 
   return (
     <header className="hero-section">
@@ -380,6 +383,30 @@ const FeaturesSection = () => {
       description: "Collaborate in real-time across your entire team.",
       colorVariantClass: "card-blue",
       hasBackgroundIcon: false
+    },
+    {
+      id: 4,
+      iconClass: "fas fa-chart-line",
+      title: "Analytics Dashboard",
+      description: "Data-driven insights and metrics for smarter decisions.",
+      colorVariantClass: "card-purple",
+      hasBackgroundIcon: false
+    },
+    {
+      id: 5,
+      iconClass: "fas fa-wallet",
+      title: "Budget Management",
+      description: "Track finances, expenses, and burn rate efficiently.",
+      colorVariantClass: "card-green",
+      hasBackgroundIcon: false
+    },
+    {
+      id: 6,
+      iconClass: "fas fa-rocket",
+      title: "Investor Readiness",
+      description: "Auto-generate pitch materials and track growth metrics.",
+      colorVariantClass: "card-blue",
+      hasBackgroundIcon: true
     }
   ];
 

@@ -13,6 +13,7 @@ import {
   FlagIcon,
   ArrowRightOnRectangleIcon,
   UserCircleIcon,
+  BanknotesIcon,
 } from '@heroicons/react/24/outline';
 
 // Founder navigation (full access)
@@ -22,6 +23,7 @@ const founderNavigation = [
   { name: 'Investor Readiness', href: '/investor-readiness', icon: RocketLaunchIcon, founderOnly: true },
   { name: 'Tasks', href: '/tasks', icon: CheckCircleIcon },
   { name: 'Milestones', href: '/milestones', icon: FlagIcon },
+  { name: 'Budget', href: '/budget', icon: BanknotesIcon, founderOnly: true },
   { name: 'Decision Log', href: '/decisions', icon: ChatBubbleLeftRightIcon, founderOnly: true },
   { name: 'Assumption Board', href: '/assumptions', icon: CheckCircleIcon, founderOnly: true },
   { name: 'Feedback', href: '/feedback', icon: ChatBubbleLeftRightIcon, founderOnly: true },

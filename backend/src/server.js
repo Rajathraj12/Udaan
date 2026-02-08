@@ -32,6 +32,7 @@ app.use('/api/investor-readiness', require('./routes/investorReadiness'));
 app.use('/api/decisions', require('./routes/decisions'));
 app.use('/api/assumptions', require('./routes/assumptions'));
 app.use('/api/suggestions', require('./routes/suggestions'));
+app.use('/api/budget', require('./routes/budget'));
 
 // Health check
 app.get('/health', (req, res) => {

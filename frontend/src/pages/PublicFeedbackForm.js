@@ -204,11 +204,12 @@ export default function PublicFeedbackForm() {
           <select
             value={answers[index] || ''}
             onChange={(e) => handleAnswerChange(index, e.target.value)}
-            className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition"
+            className="w-full bg-gray-800 border border-white/20 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition cursor-pointer hover:bg-gray-700"
+            style={{ backgroundImage: "url(\"data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%239CA3AF' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e\")", backgroundPosition: "right 0.5rem center", backgroundRepeat: "no-repeat", backgroundSize: "1.5em 1.5em", paddingRight: "2.5rem" }}
           >
-            <option value="">Select an option</option>
+            <option value="" className="bg-gray-800 text-white">Select an option</option>
             {question.options?.map((option, i) => (
-              <option key={i} value={option}>{option}</option>
+              <option key={i} value={option} className="bg-gray-800 text-white">{option}</option>
             ))}
           </select>
         );
@@ -299,13 +300,14 @@ export default function PublicFeedbackForm() {
                 <select
                   value={userType}
                   onChange={(e) => setUserType(e.target.value)}
-                  className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition"
+                  className="w-full bg-gray-800 border border-white/20 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition cursor-pointer hover:bg-gray-700"
+                  style={{ backgroundImage: "url(\"data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%239CA3AF' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e\")", backgroundPosition: "right 0.5rem center", backgroundRepeat: "no-repeat", backgroundSize: "1.5em 1.5em", paddingRight: "2.5rem" }}
                 >
-                  <option value="">Select type (optional)</option>
-                  <option value="student">Student</option>
-                  <option value="professional">Professional</option>
-                  <option value="business">Business Owner</option>
-                  <option value="other">Other</option>
+                  <option value="" className="bg-gray-800 text-white">Select type (optional)</option>
+                  <option value="student" className="bg-gray-800 text-white">Student</option>
+                  <option value="professional" className="bg-gray-800 text-white">Professional</option>
+                  <option value="business" className="bg-gray-800 text-white">Business Owner</option>
+                  <option value="other" className="bg-gray-800 text-white">Other</option>
                 </select>
               </div>
               <div>

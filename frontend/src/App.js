@@ -20,6 +20,7 @@ import InvestorReadiness from './pages/InvestorReadiness';
 import DecisionLog from './pages/DecisionLog';
 import AssumptionBoard from './pages/AssumptionBoard';
 import PublicFeedbackForm from './pages/PublicFeedbackForm';
+import Budget from './pages/Budget';
 
 // Public Route Component (redirect if logged in)
 const PublicRoute = ({ children }) => {
@@ -136,6 +137,14 @@ function AppRoutes() {
           element={
             <ProtectedRoute allowedRoles={['founder']}>
               <AssumptionBoard />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/budget" 
+          element={
+            <ProtectedRoute allowedRoles={['founder']}>
+              <Budget />
             </ProtectedRoute>
           } 
         />
